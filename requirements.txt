@@ -1,0 +1,16 @@
+tensorflow==2.7.0
+tensorflow-addons==0.15.0  # ESN test
+tensorboard_plugin_profile  # Profiler
+keras-tuner
+
+numpy
+sktime
+scikit-learn
+scipy
+matplotlib
+
+ipykernel
+
+# Send gnome notification
+dbus-python  # for notify2
+notify2
