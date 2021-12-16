@@ -53,7 +53,7 @@ class ESN(tf.keras.layers.RNN):
 
     @property
     def spectral_radius(self):
-        return self.cell.recurrent_initializer.spectral_radius
+        return self.cell.initializer.spectral_radius
 
     @property
     def activation(self):
@@ -71,7 +71,7 @@ class Reservoir(tf.keras.layers.AbstractRNNCell):
             bias_initializer=tf.keras.initializers.Zeros,  # Change this to use Bias
             **kwargs,
     ):
-        super().__init__(**kwargs)
+        super().__init__(trainable=False, name="reservoir", **kwargs)
 
         self.units = units
         self.leaky = leaky

@@ -1,5 +1,5 @@
 tensorflow==2.7.0
-tensorflow-addons==0.15.0  # ESN test
+#tensorflow-addons==0.15.0  # ESN test
 tensorboard_plugin_profile  # Profiler
 keras-tuner
 
@@ -12,5 +12,5 @@ matplotlib
 ipykernel
 
 # Send gnome notification
-dbus-python  # for notify2
-notify2
+# dbus-python  # for notify2
+# notify2

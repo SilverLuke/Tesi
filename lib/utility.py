@@ -8,22 +8,25 @@ import matplotlib.pyplot as plt
 
 import os
 from time import *
-import notify2
+#import notify2
 
 
 class Benchmark:
-    def __init__(self, name: str, trained_model, hp, accuracy_stat, time_stat):
+    def __init__(self, name: str, trained_model, hp, accuracy_stat, loss_stat, time_stat):
         self.name = name
         self.model = trained_model
         self.hyperparams = hp
         self.acc_mean = accuracy_stat[0]
         self.acc_std = accuracy_stat[1]
+        self.loss_mean = loss_stat[0]
+        self.loss_std = loss_stat[1]
         self.time_mean = time_stat[0]
         self.time_std = time_stat[1]
 
     def __str__(self):
         ret = "Model name: {}\n".format(self.name)
         ret += "Accuracy  : {:.2f}±{:.2f}%\n".format(self.acc_mean * 100., self.acc_std * 100)
+        ret += "Loss      : {:.2f}±{:.2f}\n".format(self.loss_mean, self.loss_std)
         ret += "Build time: {:.2f}±{:.2f}s\n".format(self.time_mean, self.time_std)
         ret += "Hyperparameters:\n"
         for key, val in self.hyperparams.values.items():
@@ -86,46 +89,35 @@ def tune_and_test(name, build_model_fn,
     loss_stat = (np.mean(loss_ts), np.std(loss_ts))
     time_stat = (np.mean(required_time), np.std(required_time))
 
-    benchmarks[name] = Benchmark(name, test_model, best_model_hp, acc_stat, time_stat)
-    print('--C--')
+    benchmarks[name] = Benchmark(name, test_model, best_model_hp, acc_stat, loss_stat, time_stat)
     print('Results:')
     print('\tAccuracy: {:.2f}±{:.2f}%'.format(acc_stat[0] * 100., acc_stat[1] * 100))
-    print('\tLoss: {:.2f}±{:.2f}'.format(loss_stat[0], loss_stat[1]))
-    print('\tTime: {:.2f}±{:.2f}s'.format(time_stat[0], time_stat[1]))
-    send_notification(name, "Accuratezza: {:.2f}±{:.2f}%".format(acc_stat[0] * 100., acc_stat[1] * 100))
+    print('\tLoss    : {:.2f}±{:.2f}'.format(loss_stat[0], loss_stat[1]))
+    print('\tTime    : {:.2f}±{:.2f}s'.format(time_stat[0], time_stat[1]))
+    #send_notification(name, "Accuratezza: {:.2f}±{:.2f}%".format(acc_stat[0] * 100., acc_stat[1] * 100))
 
     return test_model
 
 
-def send_notification(title, message):
-    notice = notify2.Notification(title, message)
-    notice.show()
+# Check the values not used
+def check_and_vectorize(value, dtype, length, name, _min=0.0, _max=1.0):
+    def out_of_bound(val):
+        if not _min <= val <= _max:
+            raise ValueError(
+                "{} must be inside the [{};{}] range so value {} is wrong.".format(name, _min, _max, value))
+
+    if isinstance(value, dtype):
+        out_of_bound(value)
+        return [value for _ in range(length)]
+    elif isinstance(value, list):
+        if len(value) != length:
+            raise ValueError("{} length is wrong should be {} instead of {}".format(name, length, len(value)))
+        for elem in value:
+            if isinstance(elem, dtype):
+                out_of_bound(elem)
 
 
 # Return a vector of units for each sub-reservoir
-def equalize_units(units, features):
-    local_units = [units // features for _ in range(features)]
-    if units % features != 0:
-        used_units = (units // features) * features
-        rest = units - used_units
-        for i in range(rest):
-            local_units[i] += 1
-    return local_units
-
-
-def split_units(shape, part):
-    partitions = []
-    used = 0
-    for div in part:
-        units = int(np.floor(shape * div))
-        used += units
-        partitions.append(units)
-    rest = shape - used  # Rest should be less or equal to len(list)
-    for i in range(rest):
-        partitions[i] += 1
-    return partitions
-
-
 def get_spectral_radius(tensor):
     return tf.reduce_max(tf.abs(tf.linalg.eig(tensor)[0]))
 
@@ -148,31 +140,14 @@ def unipi_generate_matrix(shape, spectral_radius: float):
     return w
 
 
-def check_and_vectorize(value, dtype, length, name, _min=0.0, _max=1.0):
-    def out_of_bound(val):
-        if not _min <= val <= _max:
-            raise ValueError(
-                "{} must be inside the [{};{}] range so value {} is wrong.".format(name, _min, _max, value))
-
-    if isinstance(value, dtype):
-        out_of_bound(value)
-        return [value for _ in range(length)]
-    elif isinstance(value, list):
-        if len(value) != length:
-            raise ValueError("{} length is wrong should be {} instead of {}".format(name, length, len(value)))
-        for elem in value:
-            if isinstance(elem, dtype):
-                out_of_bound(elem)
-
-
 # Spectral radius should be between 0 and 1 to maintain the echo state property
 def generate_matrix(shape, initializer, spectral_radius, connectivity, dtype=None):
-    if connectivity == 1:
+    if connectivity == 1.:
         if spectral_radius is not None:
             return unipi_generate_matrix(shape, spectral_radius)
         else:
             return tf.random.uniform(shape)
-    if connectivity == 0:
+    elif connectivity == 0.:
         return tf.zeros(shape)
     else:
         # https://github.com/tensorflow/addons/blob/e83e71cf07f65773d0f3ba02b6de66ec3b190db7/tensorflow_addons/rnn/esn_cell.py
@@ -186,12 +161,17 @@ def generate_matrix(shape, initializer, spectral_radius, connectivity, dtype=Non
 
 
 # matrices is a python matrix of tf.matrix
-def join_matrices(matricex):
-    ret = tf.concat(matricex[0], axis=1)
-    for r_k in matricex[1:]:
+def join_matrices(matrices):
+    ret = tf.concat(matrices[0], axis=1)
+    for r_k in matrices[1:]:
         tmp = tf.concat(r_k, axis=1)  # axis=1 horizontal concatenation
         ret = tf.concat([ret, tmp], axis=0)
     return ret
+
+
+def send_notification(title, message):
+    notice = notify2.Notification(title, message)
+    notice.show()
 
 
 def plot_matrices(matrices, name, path=None, units_per_inch=50,
@@ -239,3 +219,35 @@ def plot_matrices(matrices, name, path=None, units_per_inch=50,
     if path is not None:
         fig.savefig(path + os.sep + name + ".svg", format='SVG', dpi=units_per_inch)
     fig.show()
+
+
+def plot_benchmarks(units, benchmarks, path):
+    metric_name = 'ESNs with ' + str(units) + ' units.'
+    labels = [b[0:4] for b in benchmarks.keys()]
+    x = np.arange(len(benchmarks))
+    width = 0.3
+    padding = 0.02
+
+    acc_mean = [b.acc_mean for b in benchmarks.values()]
+    acc_std = [b.acc_std for b in benchmarks.values()]
+    time_mean = [b.time_mean for b in benchmarks.values()]
+    time_std = [b.time_std for b in benchmarks.values()]
+
+    plt.clf()
+    plt.title(metric_name)
+
+    ax1 = plt.subplot(1, 1, 1)
+
+    plt.xticks(x, labels, rotation=45)
+
+    ax1.bar(x - width / 2 - padding, acc_mean, yerr=acc_std, width=width, color='g', label='Accuracy')
+    ax2 = ax1.twinx()
+    ax2.bar(x + width / 2 + padding, time_mean, yerr=time_std, width=width, color='r', align='center',
+                      label='Train time')
+
+    lines, labels = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax2.legend(lines + lines2, labels + labels2, loc=8)
+
+    plt.savefig(path + os.sep + "benchmarks C1 U" + str(units) + ".svg", format='SVG', dpi=100)
+    plt.show()

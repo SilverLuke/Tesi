@@ -71,16 +71,12 @@ def test_connectivity():
     print("average size:", sum(x) / len(x), "\nAverage zeros:", sum(y) / len(y))
 
 
-def test_equalize_units():
-    split = equalize_units(6, 3)
-    print(split)
-
-
 def test_splits():
-    units = 302
-    parts = [1. / 3., 1. / 3., 1. / 3.]
-    splits = split_units(units, parts)
-    print(splits)
+    partitions = [random.uniform(0., 1.) for i in range(3)]
+    total = sum(partitions)
+    t = list(map(lambda _x: _x / total, partitions))
+    print(partitions, total)
+    print(t, sum(t))
 
 
 def test_join_matrices():
@@ -127,7 +123,8 @@ def test_activations():
 
 
 def benchmark_bias():
-    time_uni = []
+    time_if = []
+    time_plus = []
     w2 = None
     zero_init = tf.keras.initializers.Zeros()
     for _ in range(30):
@@ -138,9 +135,14 @@ def benchmark_bias():
         start = time()
         if not isinstance(bias, zero_init):
             w2 = inputs + bias
-        time_uni.append(time() - start)
+        time_if.append(time() - start)
+        start = time()
+        w3 = inputs + bias
+        time_plus.append(time() - start)
     print(w2)
-    print(np.mean(time_uni), "+_", np.std(time_uni))
+    print(w3)
+    print("With if   :", np.mean(time_if), "+_", np.std(time_if))
+    print("Without if:", np.mean(time_plus), "+_", np.std(time_plus))
 
 
 def benchmark_inits():
@@ -163,10 +165,4 @@ def benchmark_inits():
 
 
 if __name__ == '__main__':
-    benchmark_inits()
-# test_inits()
-# test_activations()
-# test_join_matrices()
-# test_spectral_radius()
-# test_equalize_units()
-# test_MESNI()
+    test_splits()

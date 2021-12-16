@@ -3,55 +3,6 @@ import lib.esn
 from lib.initializers import *
 
 
-class ESNInterfaceBUG(keras.Model):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.model = None
-
-    def call(self, **kwargs):
-        return self.model.call(**kwargs)
-
-    def compile(self, **kwargs):
-        return self.model.compile(**kwargs)
-
-    def fit(self, x, y, **kwargs):
-        return self.model.fit(x, y, **kwargs)
-
-    def evaluate(self, x, y, **kwargs):
-        return self.model.evaluate(x, y, **kwargs)
-
-    @property
-    def units(self):
-        return self.model.layers[1].units
-
-
-class ESN1_SLOW(ESNInterfaceBUG):
-    def __init__(self,
-                 units: int,
-                 output_units: int,
-                 output_activation,
-                 input_scaling: float,
-                 bias_scaling: float,
-                 spectral_radius=0.9,
-                 leaky=0.1,
-                 **kwargs
-                 ):
-        super().__init__(**kwargs)
-
-        kernel_init = Kernel(initializer=tf.keras.initializers.RandomUniform(
-            minval=-input_scaling, maxval=input_scaling)
-        )
-        recurrent_kernel_init = RecurrentFullConnected(spectral_radius)
-        bias_init = tf.keras.initializers.RandomUniform(minval=-bias_scaling, maxval=bias_scaling)
-
-        self.model = keras.Sequential([
-            keras.layers.Masking(),
-            lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
-                        bias_initializer=bias_init),
-            keras.layers.Dense(output_units, activation=output_activation, name="readout")
-        ])
-
-
 class ESNInterface(keras.Model):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -109,10 +60,8 @@ class ESN1(ESNInterface):
         self.reservoir = keras.Sequential([
             keras.layers.Masking(),
             lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
-                        bias_initializer=bias_init
-                        ),
-            ])
-
+                        bias_initializer=bias_init),
+        ])
         self.readout = keras.Sequential([
             keras.layers.Dense(output_units, activation=output_activation, name="readout")
         ])
@@ -133,17 +82,18 @@ class ESN2(ESNInterface):
                  ):
         super().__init__(**kwargs)
 
-        kernel_init = Kernel(initializer=tf.keras.initializers.RandomUniform(
+        kernel_init = SplitKernel(sub_reservoirs, initializer=tf.keras.initializers.RandomUniform(
             minval=-input_scaling, maxval=input_scaling)
         )
         recurrent_kernel_init = Type2(sub_reservoirs, connectivity, spectral_radius)
         bias_init = tf.keras.initializers.RandomUniform(minval=-bias_scaling, maxval=bias_scaling)
 
-        self.model = keras.Sequential([
+        self.reservoir = keras.Sequential([
             keras.layers.Masking(),
             lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
-                        bias_initializer=bias_init
-                        ),
+                        bias_initializer=bias_init),
+        ])
+        self.readout = keras.Sequential([
             keras.layers.Dense(output_units, activation=output_activation, name="readout")
         ])
 
@@ -163,17 +113,49 @@ class ESN3(ESNInterface):
                  ):
         super().__init__(**kwargs)
 
-        kernel_init = Kernel(initializer=tf.keras.initializers.RandomUniform(
+        kernel_init = SplitKernel(sub_reservoirs, initializer=tf.keras.initializers.RandomUniform(
             minval=-input_scaling, maxval=input_scaling)
         )
         recurrent_kernel_init = Type3(sub_reservoirs, connectivity, spectral_radius)
         bias_init = tf.keras.initializers.RandomUniform(minval=-bias_scaling, maxval=bias_scaling)
 
-        self.model = keras.Sequential([
+        self.reservoir = keras.Sequential([
             keras.layers.Masking(),
             lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
-                        bias_initializer=bias_init
-                        ),
+                        bias_initializer=bias_init),
+        ])
+        self.readout = keras.Sequential([
             keras.layers.Dense(output_units, activation=output_activation, name="readout")
         ])
 
+
+class ESN4(ESNInterface):
+    def __init__(self,
+                 units: int,
+                 sub_reservoirs: int,
+                 partitions: TensorLike,
+                 output_units: int,
+                 output_activation,
+                 input_scaling,
+                 bias_scaling,
+                 connectivity=1.,
+                 spectral_radius=0.9,
+                 leaky=0.1,
+                 **kwargs
+                 ):
+        super().__init__(**kwargs)
+
+        kernel_init = SplitKernel(sub_reservoirs, partitions=partitions, initializer=tf.keras.initializers.RandomUniform(
+            minval=-input_scaling, maxval=input_scaling)
+        )
+        recurrent_kernel_init = Type4(sub_reservoirs, partitions, connectivity, spectral_radius)
+        bias_init = tf.keras.initializers.RandomUniform(minval=-bias_scaling, maxval=bias_scaling)
+
+        self.reservoir = keras.Sequential([
+            keras.layers.Masking(),
+            lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
+                        bias_initializer=bias_init),
+        ])
+        self.readout = keras.Sequential([
+            keras.layers.Dense(output_units, activation=output_activation, name="readout")
+        ])
