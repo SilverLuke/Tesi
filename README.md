@@ -10,6 +10,9 @@ Per chiarezza definisco le varie modifiche in questo modo:
 - ESN3: Il reservoir è composto da N sub-reservoir ognuno con dimensione uguale a UNITS / N, tra di loro connessi
 - ESN4: Il reservoir è composto da N sub-reservoir ognuno con dimensione variable, tra di loro connessi
 
+![image](images/ESN1%20C1%20U100.svg) ![image](images/ESN2%20C1%20U100.svg)
+![image](images/ESN3%20C1%20U100.svg) ![image](images/ESN4%20C1%20U100.svg)
+
 ## Risultati ottenuti
 
 I seguenti risultati sono stati ottenuti tramite il dataset 'character trajectories', ricostruendo il modello 5 volte con gli stessi iperparametri.
@@ -26,6 +29,8 @@ ESN1 è il modello di riferimento.
 | 175   | 86.85±2.49% | 83.31±4.26% | 93.43±2.91% | 93.38±2.47% |
 | 200   | 87.49±2.33% | 90.74±2.49% | 94.28±0.74% | 95.18±1.33% |
 
+![image](images/plots.png)
+
 A quante unità si arriva a un accuratezza X
 
 | Accuratezza | ESN 1         | ESN 2 | ESN 3 | ESN 4 |
@@ -37,13 +42,16 @@ Grafici e immagini dei modelli si trovano nella cartella ```images```
 
 ## Implementazione
 
-Tutti modelli sono formati da due modelli di tipo keras.Sequential:
-- un reservoir costituito da un livello di masking e da un livello ESN definito in ```lib/esn.py```.
-- il readout costituito da un solo livello Denso.
-
 I modelli vengono definiti all'interno del file ```lib/models.py```, ed ereditano dalla classe "ESNInteface" i metodi di call, fit e evaluate,
 le differenze tra i modelli sono le funzioni d'inizializzazione del reservoir nella funzione di init.
-Le inizializzazioni dei kernel e dei recurrent kernel vengono definite in ```lib/initializers.py```. 
+
+Tutti modelli da me implementati sono formati da due modelli di tipo keras.Sequential, il primo composto da:
+- un livello di masking
+- un livello ESN definito in ```lib/esn.py```.
+
+Il secondo è il readout ed è costituito da un solo livello Denso.
+Il livello ESN eredita da tf.keras.layers.RNN dove al suo interno troviamo la cell definita dalla classe Reservoir sempre nel solito file.
+La classe Reservoir vengono passate le funzioni di inizializzazione del kernel e del recurrent kernel, tali funzioni vengono definite nel file ```lib/initializers.py```. 
 
 Per i kernel esistono 2 inizializzatori:
 - ```Kernel``` per generare kernel "standard"
@@ -55,4 +63,4 @@ Per i recurrent kernel :
 - ```RecurrentFullConnected``` usato per ESN1
 - ```RecurrentKernel``` usato per generare i kernel ricorrenti con i N sub-reservoir, andando a generare NxN matrici ognuna con le proprietà necessarie,
 per poi andarle a riunificare in una sola matrice.
-- ```Type2, Type3, Type4``` Ereditano da ```RecurrentKernel``` e forniscono i parametri necessari per poter creare i reservoir per i modelli ESN2, ESN3 e ESN4 
+- ```Type2, Type3, Type4``` Ereditano da ```RecurrentKernel``` e servono per poter fornire i giusti parametri alla classe ereditata.
