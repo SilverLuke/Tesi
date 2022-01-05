@@ -78,6 +78,7 @@ ognuno di questi sensori riporta la propria posizione X Y Z per un totale di 36 
 Risultati:
 
 ![image](images/ArticularyWordRecognition/benchmarks/summary%20plot.svg)
+![image](images/ArticularyWordRecognition/benchmarks/summary%20histogram.svg)
 ![image](images/ArticularyWordRecognition/benchmarks/summary%20table.svg)
 
 ### CharacterTrajectories
@@ -88,6 +89,7 @@ I caratteri registrati sono 'a' 'b' 'c' 'd' 'e' 'g' 'h' 'l' 'm' 'n' 'o' 'p' 'q' 
 Risultati:
 
 ![image](images/CharacterTrajectories/benchmarks/summary%20plot.svg)
+![image](images/CharacterTrajectories/benchmarks/summary%20histogram.svg)
 ![image](images/CharacterTrajectories/benchmarks/summary%20table.svg)
 
 
@@ -106,21 +108,22 @@ Vecchi risultati:
 
 ### Libras
 
-LIBRAS, è l'acronimo in Portoghese di "Lingua BRAsileira de Sinais", che è la lingua dei segni ufficiale brasiliana. La componenti del dataset sono le 
-direzioni delle mani
+LIBRAS, è l'acronimo in Portoghese di "Lingua BRAsileira de Sinais", che è la lingua dei segni ufficiale brasiliana. 
+La componenti del dataset sono le direzioni delle mani.
 
 Risultati:
 
 ![image](images/Libras/benchmarks/summary%20plot.svg)
+![image](images/Libras/benchmarks/summary%20histogram.svg)
 ![image](images/Libras/benchmarks/summary%20table.svg)
 
 ### SpokenArabicDigits
 
-This data set is taken from the UCI repository. It is derived from sound. Dataset from 8800 (10 digits x 10 repetitions x 88 speakers) time series of 13 
-Frequency Cepstral Coefficients (MFCCs) had taken from 44 males and 44 females Arabic native speakers between the ages 18 and 40 to represent ten spoken Arabic digit. 
-Each line on the data base represents 13 MFCCs coefficients in the increasing order separated by spaces
+Questo data set è derivato da file audio, composto da 8800 (10 cifre x 10 ripetizioni x 88 partecipanti) serie temporali di 13 
+Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che parlano Arabo come lingua madre tra i 18 e i 40 anni di età che rappresentano le prime 10 cifre arabe. 
 
 ![image](images/SpokenArabicDigits/benchmarks/summary%20plot.svg)
+![image](images/SpokenArabicDigits/benchmarks/summary%20histogram.svg)
 ![image](images/SpokenArabicDigits/benchmarks/summary%20table.svg)
 
 #### Altro

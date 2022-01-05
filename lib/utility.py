@@ -175,6 +175,7 @@ def tune_and_test(model_name, build_model_fn, experiment_name,
 def natural_keys(text):
     def atoi(_text):
         return int(_text) if _text.isdigit() else _text
+
     return [atoi(c) for c in re.split(r'(\d+)', text)]
 
 
@@ -227,6 +228,14 @@ def get_experiments_label(texts):
     return experiments_labels
 
 
+def list_experiments(benchmarks):
+    tmp = set()
+    for model, experiments in benchmarks.items():
+        for exp in experiments:
+            tmp.add(exp.experiment)
+    return tmp
+
+
 def plot_by_experiment(all_benchmarks, path=None, show=True):
     group = group_by_experiment(all_benchmarks)
     for exp_name, benchmarks in group.items():
@@ -239,13 +248,10 @@ def plot_by_experiment(all_benchmarks, path=None, show=True):
 
         acc_mean = [b.get_accuracy_mean() for b in benchmarks]
         acc_std = [b.get_accuracy_std() for b in benchmarks]
-        loss_mean = [b.get_loss_mean() for b in benchmarks]
-        loss_std = [b.get_loss_std() for b in benchmarks]
-        time_mean = [b.get_time_mean() for b in benchmarks]
-        time_std = [b.get_time_std() for b in benchmarks]
 
         fig, ax = plt.subplots()
         ax.bar(x_pos, acc_mean,
+               width=width,
                yerr=acc_std,
                align='center',
                alpha=0.5,
@@ -450,34 +456,39 @@ def plot_summary_table(all_benchmarks, path=None, show=True):
     plt.close(fig)
 
 
-def list_experiments(benchmarks):
-    tmp = set()
-    for model, experiments in benchmarks.items():
-        for exp in experiments:
-            tmp.add(exp.experiment)
-    return tmp
-
-
 def plot_histograms(all_benchmarks, dataset, path=None, show=True, skip_exp=[]):
     benchmarks = group_by_model(all_benchmarks, skip_exp)
-    x_labels = list_experiments(benchmarks)
+    x_labels = get_experiments_label(list_experiments(benchmarks))
     datafetch = {}
     for model, bench in benchmarks.items():
-        val = []
+        val = ([], [])
         for b in bench:
-            val.append(b.get_accuracy_mean())
-            #val[2].append(b.get_accuracy_std())
+            val[0].append(b.get_accuracy_mean())
+            val[1].append(b.get_accuracy_std())
         datafetch[model] = val
 
-    all = np.transpose(list(datafetch.values()))
-    labels = list(datafetch.keys())
-    x_pos = 6
+    width = 0.15
+    margin = 0.02
+    total = width + margin
 
-    print(all)
+    test = list(datafetch.values())
+    models = list(datafetch.keys())
+    x = np.arange(6)
 
-    plt.hist(all, x_pos, label=labels)
-    plt.title(dataset + " dataset")
-    plt.legend(loc='lower right')
+    fig, ax = plt.subplots()
+    for i, elem in enumerate(test):
+        acc, err = elem
+        print(acc, err)
+        ax.bar(x + ((i * total) - (total - total / 2)), acc, width, yerr=err, label=models[i],
+               align = 'center',
+               capsize = 3)
+
+    ax.set_xticks(ticks=x, labels=x_labels, rotation=45)
+    ax.set_ylabel('Accuracy')
+    ax.yaxis.set_major_locator(MultipleLocator(0.1))
+    ax.yaxis.set_minor_locator(MultipleLocator(0.05))
+    ax.set_title(dataset + str(" dataset"))
+    ax.legend(loc='lower right')
 
     if path is not None:
         plt.savefig(os.path.join(path, "summary histogram.svg"), format='SVG', dpi=100)
@@ -500,7 +511,8 @@ def plot_lines(all_benchmarks, dataset, path=None, show=True, skip_exp=[]):
 
     for model, val in datafetch.items():
         sort_list = list(zip(*sorted(zip(*val))))
-        (_, caps, _) = plt.errorbar(sort_list[0], sort_list[1], yerr=sort_list[2], marker='o', label=model, markersize=3, capsize=10)
+        (_, caps, _) = plt.errorbar(sort_list[0], sort_list[1], yerr=sort_list[2], marker='o', label=model,
+                                    markersize=3, capsize=10)
         for cap in caps:
             cap.set_markeredgewidth(1)
     plt.title(dataset + " dataset")
