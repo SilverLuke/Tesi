@@ -1,15 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Created on Wed Mar 25 12:54:28 2020
 
 @author: gallicch
-"""
-
-"""import reservoir as res
-from tensorflow import keras
-from skopt import BayesSearchCV
-import numpy as np
 """
 
 import os
@@ -19,12 +11,10 @@ from tensorflow import keras
 from tensorflow.keras import backend as K
 
 from scipy.io import loadmat
-import numpy as np
 
 from sktime.utils.data_io import load_from_tsfile_to_dataframe
+#from sktime.datasets._data_io import load_from_tsfile_to_dataframe # V 0.10
 # from sktime.utils.load_data import load_from_tsfile_to_dataframe  # Change this for old version
-
-import sktime
 
 import _pickle as cPickle
 
@@ -118,7 +108,7 @@ def convert_input_from_sktime(X, max_shape=None):
             for x in X.values[i][j]:
                 dimension.append(x)
                 l = l + 1
-                if (l == num_timesteps):
+                if l == num_timesteps:
                     break
             if j == 0:
                 time_series = np.column_stack([dimension])

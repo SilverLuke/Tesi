@@ -1,5 +1,10 @@
+data/**
 models/**
 examples/**
 .idea
 venv
 **/__pycache__
+notebooks/matplotlib_test.ipynb
+notebooks/tensorflow_tests.ipynb
+
+	
