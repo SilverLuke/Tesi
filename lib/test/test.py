@@ -1,10 +1,14 @@
 import random
+from typing import Optional
+
 import matplotlib
 import numpy as np
 import tensorflow as tf
 import sys
 from time import *
 import os
+
+from matplotlib import pyplot as plt
 
 PROJECT_ROOT = os.path.abspath(os.getcwd() + os.sep + os.pardir + os.sep + os.pardir)
 sys.path.insert(0, PROJECT_ROOT)
@@ -18,7 +22,7 @@ OUTPUT_ACTIVATION = 'softmax'
 LOSS_FUNCTION = 'sparse_categorical_crossentropy'
 
 PROJECT_NAME = "character trajectories"
-DATA_DIR = os.path.join("data", PROJECT_NAME)
+DATA_DIR = os.path.join("datasets", PROJECT_NAME)
 DATA_DIR = os.path.join(PROJECT_ROOT, DATA_DIR)
 
 
@@ -28,7 +32,7 @@ def test_spectral_radius():
     for _ in range(0, 100):
         sr_real = random.uniform(1, 5)
         size = int(random.uniform(100, 500))
-        tensor = generate_matrix((size, size), sr_real, connectivity=1)
+        tensor = generate_matrix((size, size), sr_real, 1)
         sr = get_spectral_radius(tensor)
         x.append(size)
         y.append(sr.numpy() - sr_real)
@@ -164,5 +168,65 @@ def benchmark_inits():
     print("GlorotUniform initializer: {:.5f} ± {:.4f}s".format(np.mean(time_glorot), np.std(time_glorot)))
 
 
+def normalize(mat, sr):
+    scaling = tf.math.divide_no_nan(sr, get_spectral_radius(mat))
+    return tf.multiply(mat, scaling)
+
+
+def plot_matrix(title, matrix):
+    fig, ax = plt.subplots(figsize=(5,5))
+    im = ax.imshow(matrix)
+    ax.set_title(title)
+    # Loop over data dimensions and create text annotations.
+    for i in range(matrix.shape[0]):
+        for j in range(matrix.shape[1]):
+            val = tf.cast(matrix[i, j], tf.float32)
+            text = ax.text(j, i, "{:.5f}".format(val),
+                           ha="center", va="center", color="w")
+    fig.tight_layout()
+    plt.show()
+
+
+def test_generation_matrix():
+    size_x = 10
+    size_y = 10
+    srx = 6.
+    sry = 4.
+    gsr = 2.
+
+    init = tf.keras.initializers.GlorotUniform()
+
+    x_mat = init((size_x, size_x))
+    y_mat = init((size_y, size_y))
+    xy_zero = tf.keras.initializers.Zeros()((size_x, size_y))
+
+    x_norm = normalize(x_mat, srx)
+    y_norm = normalize(y_mat, sry)
+    xy_norm = join_matrices([[x_norm, xy_zero],[tf.transpose(xy_zero), y_norm]])
+    xy_norm2 = normalize(xy_norm, gsr)
+
+    xy_mat = join_matrices([[x_mat, xy_zero], [tf.transpose(xy_zero), y_mat]])
+    mat_norm = normalize(xy_mat, gsr)
+
+    diff = xy_norm2 - mat_norm
+
+    print("SR xy_norm", get_spectral_radius(xy_norm).numpy())
+    print("SR xy_norm2", get_spectral_radius(xy_norm2).numpy())
+    print("")
+    print("SR xy_mat", get_spectral_radius(xy_mat).numpy())
+    print("SR mat_norm", get_spectral_radius(mat_norm).numpy())
+    print("")
+    print("SR diff", get_spectral_radius(diff).numpy())
+
+    print("Are equals: ", (tf.math.count_nonzero(diff) == 0 ).numpy())
+
+    plot_matrix("xy_norm", xy_norm)
+    plot_matrix("xy_norm2", xy_norm2)
+
+    plot_matrix("mat_norm", mat_norm)
+
+    plot_matrix("DIFF", xy_norm2 - mat_norm)
+
+
 if __name__ == '__main__':
-    test_splits()
+    test_generation_matrix()

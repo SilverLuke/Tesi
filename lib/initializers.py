@@ -19,7 +19,6 @@ def split_units(shape, part):
     return partitions
 
 
-# Return a vector of units for each sub-reservoir
 def get_spectral_radius(tensor):
     return tf.cast(tf.reduce_max(tf.abs(tf.linalg.eig(tensor)[0])), tf.float32)
 
@@ -45,21 +44,18 @@ def unipi_generate_matrix(shape, spectral_radius: float):
 # Spectral radius should be between 0 and 1 to maintain the echo state property
 def generate_matrix(shape, initializer, spectral_radius, connectivity, dtype=None):
     if connectivity == 1.:
-        if spectral_radius is not None:
-            return unipi_generate_matrix(shape, spectral_radius)
-        else:
-            return tf.random.uniform(shape)
+        matrix = unipi_generate_matrix(shape, spectral_radius)
     elif connectivity == 0.:
-        return tf.zeros(shape)
+        matrix = tf.zeros(shape)
     else:
         # https://github.com/tensorflow/addons/blob/e83e71cf07f65773d0f3ba02b6de66ec3b190db7/tensorflow_addons/rnn/esn_cell.py
         matrix = initializer(shape, dtype=dtype)
         connectivity_mask = tf.cast(tf.math.less_equal(tf.random.uniform(shape), connectivity), dtype)
         matrix = tf.math.multiply(matrix, connectivity_mask)
-        if spectral_radius is not None:
-            scaling = tf.math.divide_no_nan(spectral_radius, get_spectral_radius(matrix))
-            matrix = tf.multiply(matrix, scaling)
-        return matrix
+        print(type(spectral_radius), spectral_radius)
+        scaling = tf.math.divide_no_nan(spectral_radius, get_spectral_radius(matrix))
+        matrix = tf.multiply(matrix, scaling)
+    return matrix
 
 
 # matrices is a python matrix of tf.matrix
@@ -69,6 +65,36 @@ def join_matrices(matrices):
         tmp = tf.concat(r_k, axis=1)  # axis=1 horizontal concatenation
         ret = tf.concat([ret, tmp], axis=0)
     return ret
+
+
+# Join N different matrices
+class SplitBias(tf.keras.initializers.Initializer):
+    def __init__(self, bias_scaling, sub_reservoirs):
+        self.minmax = []
+        if isinstance(bias_scaling, list):
+            if len(bias_scaling) != sub_reservoirs:
+                raise ValueError(
+                    "Lenght of Bias scaling must be equal to sub_reservoirs. {} != {}".format(len(bias_scaling),
+                                                                                              sub_reservoirs))
+            self.minmax = bias_scaling
+        elif isinstance(bias_scaling, float) or isinstance(bias_scaling, int):
+            self.minmax = [bias_scaling for _ in range(sub_reservoirs)]
+        elif bias_scaling is None:
+            self.minmax = [0. for _ in range(sub_reservoirs)]
+        else:
+            raise ValueError("Bias scaling should be a int / float or list of int/float")
+
+    def __call__(self, shape, dtype=None, **kwargs):
+        part = [1. / len(self.minmax) for _ in range(len(self.minmax))]
+        local_units = split_units(shape[0], part)
+        pieces = []
+        for i, units in enumerate(local_units):
+            init = tf.keras.initializers.RandomUniform(minval=-self.minmax[i], maxval=self.minmax[i])
+            piece = init((units,), dtype=dtype)
+            pieces.append(piece)
+
+        join = tf.concat(pieces, axis=0)
+        return join
 
 
 """ Kernel initializers """
@@ -83,19 +109,32 @@ class Kernel(tf.keras.initializers.Initializer):
 
 
 class SplitKernel(tf.keras.initializers.Initializer):
-    def __init__(self, sub_reservoirs, partitions=None, initializer=tf.keras.initializers.GlorotUniform()):
+    def __init__(self, sub_reservoirs, partitions=None, initializers=None):
         self.sub_reservoirs = sub_reservoirs
-        self.initializer = initializer
+
         if partitions is None:
             self.partitions = [1. / sub_reservoirs for _ in range(sub_reservoirs)]
         else:
-            self.partitions = partitions  # check_and_vectorize(partitions, float, sub_reservoirs, "Partitions")
+            self.partitions = partitions
+
+        if initializers is None:
+            self.initializers = [tf.keras.initializers.GlorotUniform() for _ in sub_reservoirs]
+        elif isinstance(initializers, list):
+            if len(initializers) != sub_reservoirs:
+                raise ValueError("Length of input_scaling must be equal to sub_reservoirs. {} != {}"
+                                 .format(len(initializers), sub_reservoirs))
+            self.initializers = initializers
+        elif isinstance(initializers, tf.keras.initializers.Initializer):
+            self.initializers = [initializers for _ in sub_reservoirs]
+        else:
+            raise ValueError("Initializers should be None, a single Initializer or a list of Initializer. Given: {}"
+                             .format(type(initializers)))
 
     def __call__(self, shape, dtype=None, **kwargs):
         local_units = split_units(shape[1], self.partitions)
         kernels = []
-        for units in local_units:
-            kernel = self.initializer((1, units), dtype=dtype)
+        for i, units in enumerate(local_units):
+            kernel = self.initializers[i]((1, units), dtype=dtype)
             kernels.append(tf.linalg.LinearOperatorFullMatrix(kernel))
 
         ker = tf.linalg.LinearOperatorBlockDiag(kernels).to_dense()
@@ -149,14 +188,11 @@ class RecurrentKernel(tf.keras.initializers.Initializer):
     def __init__(self, sub_reservoirs: int,
                  reservoirs_connectivity: TensorLike,
                  spectral_radius: TensorLike,
+                 gsr: float,
                  initializer=tf.keras.initializers.GlorotUniform(),
                  partitions=None,
-                 global_spectral_radius: bool = False,
                  ):
-        self.global_sr = global_spectral_radius
-        if self.global_sr:
-            if isinstance(spectral_radius, list):
-                raise ValueError("If global spectral radius is true, spectral radius must be a float not a list")
+        self.gsr = gsr
 
         if partitions is None:
             self.partitions = [1. / sub_reservoirs for _ in range(sub_reservoirs)]
@@ -175,70 +211,60 @@ class RecurrentKernel(tf.keras.initializers.Initializer):
             for j in range(self.sub_reservoirs):
                 size = (units[i], units[j])
                 connectivity = self.rc[i][j]
-
-                spectral_radius = None
-                if not self.global_sr and i == j:
-                    spectral_radius = self.spectral_radius[i]
-
-                w = generate_matrix(size, self.initializer, spectral_radius, connectivity, dtype)
-                recurrent_kernels[i][j] = w
+                spectral_radius = self.spectral_radius[i][j]
+                recurrent_kernels[i][j] = generate_matrix(size, self.initializer, spectral_radius, connectivity, dtype)
         matrix = join_matrices(recurrent_kernels)
-        if self.global_sr:  # Normalize the entire matrix
-            scaling = tf.math.divide_no_nan(self.spectral_radius, get_spectral_radius(matrix))
+        if self.gsr is not None:  # Normalize the entire matrix
+            scaling = tf.math.divide_no_nan(self.gsr, get_spectral_radius(matrix))
             matrix = tf.multiply(matrix, scaling)
         return matrix
 
 
-def check_spectral_radius(global_sr, spectral_radius, sub_reservoirs):
-    reservoirs_sr = None
-    if global_sr:
-        if isinstance(spectral_radius, list):
-            raise ValueError("When global spectral radius is True, spectral radius must a float")
-        else:
-            reservoirs_sr = tf.cast(spectral_radius, tf.float32)
-    else:
-        if isinstance(spectral_radius, float) or isinstance(spectral_radius, int):
-            reservoirs_sr = [tf.cast(spectral_radius, tf.float32) for _ in range(sub_reservoirs)]
-        elif isinstance(spectral_radius, list):
-            if len(spectral_radius) == sub_reservoirs:
-                reservoirs_sr = [tf.cast(spectral_radius[i], tf.float32) for i in range(sub_reservoirs)]
-            else:
-                raise ValueError("The list of spectral radius must have the same length of sub_reservoirs")
-    return reservoirs_sr
-
-
 class Type2(RecurrentKernel):
-    def __init__(self, sub_reservoirs, connectivity, spectral_radius, global_sr: bool = False,
+    def __init__(self, sub_reservoirs, connectivity, spectral_radius, gsr=False,
                  initializer=tf.keras.initializers.GlorotUniform()):
 
-        reservoirs_connectivity = None
         if isinstance(connectivity, float):
             reservoirs_connectivity = [[connectivity if i == j else 0. for i in range(sub_reservoirs)]
                                        for j in range(sub_reservoirs)]
         elif isinstance(connectivity, list):
-            reservoirs_connectivity = [[connectivity[i] if i == j else 0. for i in range(sub_reservoirs)]
-                                       for j in range(sub_reservoirs)]
+            if len(connectivity) == sub_reservoirs:
+                reservoirs_connectivity = [[connectivity[i] if i == j else 0. for i in range(sub_reservoirs)]
+                                           for j in range(sub_reservoirs)]
+            else:
+                raise ValueError("The inter-connectivity list must have the same length of sub_reservoirs")
+        else:
+            raise ValueError("Wrong value type for connectivity. Given {}".format(type(connectivity)))
 
-        reservoirs_sr = check_spectral_radius(global_sr, spectral_radius, sub_reservoirs)
+        if isinstance(spectral_radius, float) or isinstance(spectral_radius, int):
+            reservoirs_sr = [[tf.cast(spectral_radius, tf.float32) if i == j else 0. for i in range(sub_reservoirs)]
+                             for j in range(sub_reservoirs)]
+        elif isinstance(spectral_radius, list):
+            if len(spectral_radius) != sub_reservoirs:
+                raise ValueError("The list of spectral radius must have the same length of sub_reservoirs")
+            elif isinstance(spectral_radius[0], float) or isinstance(spectral_radius[0], int):
+                reservoirs_sr = [[tf.cast(spectral_radius[i], tf.float32) if i == j else 0.
+                                  for i in range(sub_reservoirs)]
+                                 for j in range(sub_reservoirs)]
+            else:
+                raise ValueError("Type error spectral radius for ESN2")
+        else:
+            raise ValueError("Wrong value type for spectral radius. Given {}".format(type(spectral_radius)))
 
-        super().__init__(sub_reservoirs, reservoirs_connectivity, reservoirs_sr, global_spectral_radius=global_sr,
-                         initializer=initializer)
+        super().__init__(sub_reservoirs, reservoirs_connectivity, reservoirs_sr, gsr, initializer=initializer)
 
 
 class Type3(RecurrentKernel):
-    def __init__(self, sub_reservoirs, reservoirs_connectivity, spectral_radius, global_sr: bool = False,
+    def __init__(self, sub_reservoirs, reservoirs_connectivity, spectral_radius, gsr=False,
                  initializer=tf.keras.initializers.GlorotUniform()):
-        reservoirs_sr = check_spectral_radius(global_sr, spectral_radius, sub_reservoirs)
 
-        super().__init__(sub_reservoirs, reservoirs_connectivity, reservoirs_sr, global_spectral_radius=global_sr,
+        super().__init__(sub_reservoirs, reservoirs_connectivity, spectral_radius, gsr,
                          initializer=initializer)
 
 
 class Type4(RecurrentKernel):
-    def __init__(self, sub_reservoirs, partitions, reservoirs_connectivity, spectral_radius, global_sr: bool = False,
+    def __init__(self, sub_reservoirs, partitions, reservoirs_connectivity, spectral_radius, gsr=False,
                  initializer=tf.keras.initializers.GlorotUniform()):
 
-        reservoirs_sr = check_spectral_radius(global_sr, spectral_radius, sub_reservoirs)
-
-        super().__init__(sub_reservoirs, reservoirs_connectivity, reservoirs_sr, global_spectral_radius=global_sr,
+        super().__init__(sub_reservoirs, reservoirs_connectivity, spectral_radius, gsr,
                          partitions=partitions, initializer=initializer)

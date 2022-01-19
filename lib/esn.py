@@ -83,7 +83,7 @@ class Reservoir(tf.keras.layers.AbstractRNNCell):
         self._state_size = units
         self._output_size = units
 
-        self.use_bias = self.bias_initializer is not tf.keras.initializers.Zeros
+        self.use_bias = not (self.bias_initializer is tf.keras.initializers.Zeros or self.bias_initializer is None)
         self.kernel = None
         self.recurrent_kernel = None
         self.bias = None
@@ -103,7 +103,6 @@ class Reservoir(tf.keras.layers.AbstractRNNCell):
             initializer=self.kernel_initializer,
             trainable=False,
             dtype=self.dtype,
-            synchronization=tf.VariableSynchronization.NONE
         )
 
         self.recurrent_kernel = self.add_weight(
@@ -112,7 +111,6 @@ class Reservoir(tf.keras.layers.AbstractRNNCell):
             initializer=self.recurrent_initializer,
             trainable=False,
             dtype=self.dtype,
-            synchronization=tf.VariableSynchronization.NONE
         )
 
         if self.use_bias:
@@ -122,7 +120,6 @@ class Reservoir(tf.keras.layers.AbstractRNNCell):
                 initializer=self.bias_initializer,
                 trainable=False,
                 dtype=self.dtype,
-                synchronization=tf.VariableSynchronization.NONE
             )
 
         self.built = True

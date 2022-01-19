@@ -22,7 +22,7 @@ cd Tesi
 python -m venv venv
 source venv/bin/acitivate # Se usi fish -> source venv/bin/acitivate.fish
 pip install -r requirements.txt
-cd data
+cd datasets
 wget http://www.timeseriesclassification.com/Downloads/Archives/Multivariate2018_ts.zip
 unzip Multivariate2018_ts.zip
 rm Multivariate2018_ts.zip

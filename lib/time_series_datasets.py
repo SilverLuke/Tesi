@@ -12,8 +12,8 @@ from tensorflow.keras import backend as K
 
 from scipy.io import loadmat
 
-from sktime.utils.data_io import load_from_tsfile_to_dataframe
-#from sktime.datasets._data_io import load_from_tsfile_to_dataframe # V 0.10
+# from sktime.utils.data_io import load_from_tsfile_to_dataframe
+from sktime.datasets._data_io import load_from_tsfile_to_dataframe  # V 0.10
 # from sktime.utils.load_data import load_from_tsfile_to_dataframe  # Change this for old version
 
 import _pickle as cPickle
@@ -78,9 +78,7 @@ def nan_padding(X, value=0):
     return X
 
 
-def convert_input_from_sktime(X, max_shape=None):
-    if max_shape is None:
-        max_shape = -1
+def convert_input_from_sktime(X):
     all_data = []
     lengths = []
 
@@ -116,7 +114,6 @@ def convert_input_from_sktime(X, max_shape=None):
                 time_series = np.column_stack([time_series, dimension])
         all_data.append(time_series)
     max_length = max(lengths)
-    max_length = max(max_length, max_shape)  # My HotFix
     X_c = np.zeros(shape=(len(all_data), max_length, num_features))
     for i in range(len(all_data)):
         X_c[i, :lengths[i], :] = all_data[i]
@@ -128,9 +125,9 @@ def convert_class_from_sktime(y):
     return y_c
 
 
-def load_sktime_dataset(filename, max_shape=None):
+def load_sktime_dataset(filename):
     x, y = load_from_tsfile_to_dataframe(filename)
-    return convert_input_from_sktime(x, max_shape)[0], convert_class_from_sktime(y)
+    return convert_input_from_sktime(x)[0], convert_class_from_sktime(y)
 
 
 def convert_polyphonic(data):
@@ -146,7 +143,7 @@ def convert_polyphonic(data):
     for s in range(len(data)):
         for t in range(len(data[s])):
             for note in data[s][t]:
-                # print(data[s][t])
+                # print(datasets[s][t])
                 # print(note)
                 all_data[s, t, note - 21] = 1
 

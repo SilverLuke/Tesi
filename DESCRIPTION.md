@@ -1,8 +1,25 @@
-# Tesi di Argentieri Luca
+# Indice
 
-La tesi consiste nello studio di modifiche architetturali di modelli di tipo ESN.
+- [I modelli usati](#i-modelli-usati)
+  - [ESN1:](#esn1)
+  - [ESN2:](#esn2)
+  - [ESN3:](#esn3)
+  - [ESN4:](#esn4)
+- [Esperimenti](#esperimenti)
+- [Risultati ottenuti](#risultati-ottenuti)
+  - [Datasets usati](#datasets-usati)
+    - [ArticularyWordRecognition](#articularywordrecognition)
+    - [CharacterTrajectories](#charactertrajectories)
+    - [Libras](#libras)
+    - [SpokenArabicDigits](#spokenarabicdigits)
+  - [Considerazioni](#considerazioni)
+      - [Altro](#altro)
+- [Implementazione](#implementazione)
+- [TODO & IDEAS](#todo--ideas)
+  - [TODO](#todo)
+  - [IDEAS](#ideas)
 
-## I modelli usati
+# I modelli usati
 
 Tutti i modelli sono formati da un reservoir e da un readout, il reservoir è formato da un kernel e da un kernel ricorrente.
 Quello che è stato modificato in questi esperimenti è come le feature di un dataset vengono fornite al reservoir, 
@@ -10,15 +27,15 @@ di conseguenza la disposizione dei pesi nelle matrici del reservoir.
 
 Per semplificare le successive spiegazioni assegno dei nomi alle varie modifiche usate.
 
-### ESN1:
+## ESN1:
 
 Si tratta del modello ESN standard come definito nel paper "".
 I parametri sono il numero di unità, il fattore di connessione nel kernel ricorrente, il raggio spettrale, il fattore leaky, l'input scaling e il bias scaling. 
 
-![image](images/CharacterTrajectories/weights/ESN1%20Units%2050%20Connectivity%201.svg)
+![image](plots/weights/ArticularyWordRecognition/best_models/best_esn1.svg)
  
 
-### ESN2:
+## ESN2:
 
 Questa è la prima modifica ai modelli ESN presa in considerazione, 
 l'idea alla base è quella di suddividere le N feature del dataset in N sub-reservoirs diversi ma con stessa dimensione non comunicati tra loro. 
@@ -27,7 +44,7 @@ Tutto ciò è stato implementato come un grande reservoir che contiene al suo in
 anch'esso diviso in N matrici di dimensione Units / N X Units / N. 
 Esempio di distribuzione dei pesi:
 
-![image](images/CharacterTrajectories/weights/ESN2%20Units%2050%20Connectivity%201.svg)
+![image](plots/weights/ArticularyWordRecognition/best_models/best_esn2.svg)
 
 Richiede come principale parametro aggiuntivo il numero di sub-reservoir da generare al proprio interno. 
 Alcuni parametri si estendono per funzionalità aggiuntive per effettuare un tuning più fine sono:
@@ -36,29 +53,28 @@ Alcuni parametri si estendono per funzionalità aggiuntive per effettuare un tun
 Ma possono essere usati come valore per avere i sub-reservoir con gli stessi parametri
 
 
-### ESN3:
+## ESN3:
 
 In questo modello vengono aggiunte le interconnessioni tra i sub-reservoir presenti nel modello ESN2, il valore di queste interconnessioni può essere trovato tramite models selection. 
 
-![image](images/CharacterTrajectories/weights/ESN3%20Units%2050%20Connectivity%201.svg)
+![image](plots/weights/ArticularyWordRecognition/best_models/best_esn3.svg)
 
 Non si aggiungono parametri si estende il vettore d'interconnessione a una matrice d'interconnessione tra gli N sub-reservoirs.
 
 
-### ESN4:
+## ESN4:
 
 Non ci sono modifiche logiche rispetto al modello ESN3, in questo "modello" c'è la possibilità di variare le dimensioni dei sub-reservoirs.
 
 Esempio di reservoirs con due sub-reservoir di dimensione differente
-![image](images/Libras/weights/ESN4%20Units%20112%20Connectivity%201.svg)
+![image](plots/weights/ArticularyWordRecognition/best_models/best_esn4.svg)
 
 # Esperimenti
 
-Al momento sono stati effettuati due tipi di esperimenti:
-    - l'esperimento singolo "Best" dove non ci sono vincoli durante model selection e quindi si dovrebbe ottenere il modello migliore (ma non succede sempre [BUG?])
-    - la serie di esperimenti dove si fissa il fattore di connessione dei sub-reservoirs a 1 e si incrementa le unita usate nei sub-reservoirs, per vedere come l'accuratezza aumenti all'aumentare del numero di unità
+Al momento sono stati effettuati tipi/classi di esperimenti:
 
-## Risultati ottenuti
+ - "Best model": un singolo esperimento dove tutti gli iper-parametri dei modelli sono cercati tramite model selection, cosi facendo si ottiene per ogni tipo di modello il modello con migliore accuracy (ma non succede sempre [BUG?])
+ - "Fixed units": una serie di esperimenti dove il numero di unità viene fissato a 50 75 ... per esperimento; il fattore di connessione dei sub-reservoirs viene fissato a 1, e si utilizza un solo valore di inter-connessione tra i sub-reservoir per vedere come l'accuratezza aumenti all'aumentare del numero di unità
 
 Ogni modello è stato ottimizzato tramite models selection per ogni singolo esperimento, così da ottenere la massima accuratezza ogni volta.
 Ai dataset non è stato effettuato alcun post-processing, se non l'unico accorgimento di utilizzare splitting stratificato.
@@ -77,9 +93,9 @@ ognuno di questi sensori riporta la propria posizione X Y Z per un totale di 36 
 
 Risultati:
 
-![image](images/ArticularyWordRecognition/benchmarks/summary%20plot.svg)
-![image](images/ArticularyWordRecognition/benchmarks/summary%20histogram.svg)
-![image](images/ArticularyWordRecognition/benchmarks/summary%20table.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/fixed_units/summary_plots.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/fixed_units/summary_histograms.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/fixed_units/summary_table.svg)
 
 ### CharacterTrajectories
 
@@ -88,9 +104,9 @@ I caratteri registrati sono 'a' 'b' 'c' 'd' 'e' 'g' 'h' 'l' 'm' 'n' 'o' 'p' 'q' 
 
 Risultati:
 
-![image](images/CharacterTrajectories/benchmarks/summary%20plot.svg)
-![image](images/CharacterTrajectories/benchmarks/summary%20histogram.svg)
-![image](images/CharacterTrajectories/benchmarks/summary%20table.svg)
+![image](plots/benchmarks/CharacterTrajectories/fixed_units/summary_plots.svg)
+![image](plots/benchmarks/CharacterTrajectories/fixed_units/summary_histograms.svg)
+![image](plots/benchmarks/CharacterTrajectories/fixed_units/summary_table.svg)
 
 
 Vecchi risultati:
@@ -113,24 +129,30 @@ La componenti del dataset sono le direzioni delle mani.
 
 Risultati:
 
-![image](images/Libras/benchmarks/summary%20plot.svg)
-![image](images/Libras/benchmarks/summary%20histogram.svg)
-![image](images/Libras/benchmarks/summary%20table.svg)
+![image](plots/benchmarks/Libras/fixed_units/summary_plots.svg)
+![image](plots/benchmarks/Libras/fixed_units/summary_histograms.svg)
+![image](plots/benchmarks/Libras/fixed_units/summary_table.svg)
 
 ### SpokenArabicDigits
 
 Questo data set è derivato da file audio, composto da 8800 (10 cifre x 10 ripetizioni x 88 partecipanti) serie temporali di 13 
 Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che parlano Arabo come lingua madre tra i 18 e i 40 anni di età che rappresentano le prime 10 cifre arabe. 
 
-![image](images/SpokenArabicDigits/benchmarks/summary%20plot.svg)
-![image](images/SpokenArabicDigits/benchmarks/summary%20histogram.svg)
-![image](images/SpokenArabicDigits/benchmarks/summary%20table.svg)
+![image](plots/benchmarks/SpokenArabicDigits/fixed_units/summary_plots.svg)
+![image](plots/benchmarks/SpokenArabicDigits/fixed_units/summary_histograms.svg)
+![image](plots/benchmarks/SpokenArabicDigits/fixed_units/summary_table.svg)
+
+## Considerazioni
+
+Dai questi test si puà vedere come il modello ESN2 dia sempre risultati migliori rispetto a ESN1 (contollo), mentre gli altri due modelli 
+ESN3 e ESN4 risultano essere più variabili, per esempio nel dataset ArticularyWordRecognition i modelli ESN3 e ESN4 hanno
+valori di accuracy minori di ESN2/ESN1 mentre per quanto riguarda il dataset CharacterTrajectories i modelli ESN3 e ESN4 ottengono fin da subito valori di accuratezza maggiori. 
 
 #### Altro
 
 Ulteriori grafici si trovano all'interno della cartella ```images``` dove sono suddivisi per dataset.
 
-## Implementazione
+# Implementazione
 
 I modelli vengono definiti all'interno del file ```lib/models.py```, ed ereditano dalla classe "ESNInteface" i metodi di call, fit e evaluate,
 le differenze tra i modelli sono le funzioni d'inizializzazione del reservoir nella funzione di init.
@@ -155,10 +177,8 @@ Per i recurrent kernel :
 per poi andarle a riunificare in una sola matrice.
 - ```Type2, Type3, Type4``` Ereditano da ```RecurrentKernel``` e servono per poter fornire i giusti parametri alla classe ereditata.
 
-## TODO
+# TODO & IDEAS
 
-- Rigenerare le matrici
-
-## IDEAS
+### IDEAS
 
 - ESN1.2 = kernel uguale a ESN2 (splitted) mentre il kernel ricorrente uguale a ESN1
