@@ -1,4 +1,5 @@
 import json
+from itertools import groupby
 
 import keras_tuner
 import numpy as np
@@ -226,14 +227,17 @@ class BenchmarksDB:
             fig.show()
         plt.close(fig)
 
-    def plot_datasets_summary(self, class_name: str = 'Best Hyperparameters', experiment: str = 'Best',
+    def plot_datasets_summary(self, class_name: str = 'Best Models', experiment: str = 'Best',
                               path: str = None, show: bool = True):
         models = self.list_models()
         datasets = get_sorted_keys(self.head)
 
         values = {name: ([], [], []) for name in models}
         for i, dataset in enumerate(datasets):
-            tested_models = self.head[dataset][class_name][experiment].keys()
+            try:
+                tested_models = self.head[dataset][class_name][experiment].keys()
+            except Exception as _:
+                return
             for j, model in enumerate(models):
                 if model in tested_models:
                     stat = self.head[dataset][class_name][experiment][model]
@@ -246,7 +250,7 @@ class BenchmarksDB:
                     values[model][2].append(0)
 
         fig = self._plot_histograms('Exp. Class: "' + class_name + '"\nExperiment: "' + experiment + '"', values, datasets)
-        self._save_and_show(fig, path, None, class_name, "datasets summary", show)
+        self._save_and_show(fig, path, None, class_name, "datasets summary " + class_name + " " + experiment, show)
 
     def plot_lines_by_key(self, dataset_name: str, class_name: str, key: str = 'units',
                           path: str = None, show: bool = True):
@@ -276,6 +280,8 @@ class BenchmarksDB:
         ax.set_ylim(top=1.0)
         ax.yaxis.set_major_locator(MultipleLocator(0.05))
         ax.yaxis.set_minor_locator(MultipleLocator(0.01))
+        ax.set_axisbelow(True)
+        ax.yaxis.grid(color='gray', linestyle='dashed')
         ax.set_ylabel('Accuracy')
         ax.set_xlabel(key.capitalize())
         ax.set_title('Dataset: "' + dataset_name + '"\nExp. Class: "' + class_name + '"\nhp: ' + key)
@@ -365,10 +371,21 @@ class BenchmarksDB:
         exp_tree = self.head[dataset_name][class_name]
         experiments = get_sorted_keys(exp_tree)
 
+        hp = set()
+        for experiment in experiments:
+            hp.update(exp_tree[experiment][model].hyperparameters.values.keys())
+        hp_keys = get_matching_keys(keys, hp)
+        try:
+            hp_keys.remove("use G.S.R.")
+        except Exception as _:
+            pass
+        finally:
+            hp_keys = get_sorted_keys(hp_keys)
+
         body = []
-        for i, experiment in enumerate(experiments):
+        for experiment in experiments:
             row = []
-            for key in keys:
+            for key in hp_keys:
                 value = exp_tree[experiment][model].hyperparameters.values.get(key)
                 if isinstance(value, float):
                     row.append(float("{:0.3f}".format(value)))
@@ -382,7 +399,7 @@ class BenchmarksDB:
 
         fig = plot_table('Dataset: "' + dataset_name + '"\n' +
                          'Exp. Class: "' + class_name + '"\n' +
-                         'Model: "' + model + '"', keys, experiments, body)
+                         'Model: "' + model + '"', hp_keys, experiments, body)
         self._save_and_show(fig, path, dataset_name, class_name, "hp_table_by_"+model, show)
 
     # X is hp Y is model
@@ -396,10 +413,21 @@ class BenchmarksDB:
 
         models = get_sorted_keys(models_tree)
 
+        hp = set()
+        for model in models:
+            hp.update(models_tree[model].hyperparameters.values.keys())
+        hp_keys = get_matching_keys(keys, hp)
+        try:
+            hp_keys.remove("use G.S.R.")
+        except Exception as _:
+            pass
+        finally:
+            hp_keys = get_sorted_keys(hp_keys)
+
         body = []
-        for i, model in enumerate(models):
+        for model in models:
             row = []
-            for key in keys:
+            for key in hp_keys:
                 value = models_tree[model].hyperparameters.values.get(key)
                 if isinstance(value, float):
                     row.append(float("{:0.3f}".format(value)))
@@ -413,7 +441,7 @@ class BenchmarksDB:
 
         fig = plot_table('Dataset: "' + dataset_name + '"\n' +
                          'Exp. Class: "' + class_name + '"\n' +
-                         'Experiment: "' + experiment + '"', keys, models, body)
+                         'Experiment: "' + experiment + '"', hp_keys, models, body)
         self._save_and_show(fig, path, dataset_name, class_name, "hp_table_by_"+experiment, show)
 
     def _plot_histograms(self, title, data, x_labels):
@@ -440,6 +468,8 @@ class BenchmarksDB:
 
         ax.set_xticks(ticks=x, labels=x_new)
         ax.set_ylabel('Accuracy')
+        ax.set_axisbelow(True)
+        ax.yaxis.grid(color='gray', linestyle='dashed')
         ax.yaxis.set_major_locator(MultipleLocator(0.1))
         ax.yaxis.set_minor_locator(MultipleLocator(0.05))
         ax.set_title(title)
@@ -488,6 +518,14 @@ def natural_sort(s, _nsre=re.compile('([0-9]+)')):
     return [int(text) if text.isdigit() else text.lower() for text in _nsre.split(s)]
 
 
+def get_matching_keys(exps, keys):
+    ret = []
+    for hp in keys:
+        if any(map(hp.__contains__, exps)):
+            ret.append(hp)
+    return ret
+
+
 def plot_table(title, x_labels, y_labels, body):
     width = (len(x_labels) + 1)
     height = len(y_labels) / 2
@@ -523,7 +561,9 @@ def get_models_names(tree):
 
 
 def get_sorted_keys(tree):
-    tmp = list(tree.keys())
+    tmp = tree
+    if isinstance(tree, dict):
+        tmp = list(tree.keys())
     tmp.sort(key=natural_sort)
     return tmp
 

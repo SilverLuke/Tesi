@@ -1,0 +1,3556 @@
+{
+    "CharacterTrajectories": {
+        "Multiple S.R.": {
+            "Units 50": {
+                "ESN1": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 50
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 50,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.4000000000000001,
+                            "input scaling 0": 0.9,
+                            "bias scaling 0": 1.5000000000000002,
+                            "leaky": 0.1,
+                            "learning rate": 0.008666680929231872
+                        }
+                    },
+                    "accuracy": [
+                        0.6808510422706604,
+                        0.7595744729042053,
+                        0.7595744729042053,
+                        0.7127659320831299,
+                        0.714893639087677,
+                        0.7595744729042053,
+                        0.742553174495697,
+                        0.6957446932792664,
+                        0.7319148778915405,
+                        0.742553174495697
+                    ],
+                    "loss": [
+                        0.9835487008094788,
+                        0.7672337293624878,
+                        0.7697972059249878,
+                        0.870342493057251,
+                        0.8721435070037842,
+                        0.7904238700866699,
+                        0.8294742107391357,
+                        0.9240754842758179,
+                        0.8484033346176147,
+                        0.7904488444328308
+                    ],
+                    "build time": [
+                        5.052981376647949,
+                        4.836731910705566,
+                        4.879160642623901,
+                        5.250757217407227,
+                        4.965347766876221,
+                        4.978151559829712,
+                        4.994342088699341,
+                        4.9261085987091064,
+                        4.926624774932861,
+                        4.993518352508545
+                    ],
+                    "timestamp": 1644512405
+                },
+                "ESN2": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 50
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 50,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.9000000000000001,
+                            "spectral radius 1": 1.7000000000000002,
+                            "spectral radius 2": 1.7000000000000002,
+                            "use G.S.R.": false,
+                            "input scaling 0": 1.5000000000000002,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.006438036732141054
+                        }
+                    },
+                    "accuracy": [
+                        0.8340425491333008,
+                        0.8340425491333008,
+                        0.8638297915458679,
+                        0.8212766051292419,
+                        0.8510638475418091,
+                        0.8829787373542786,
+                        0.8361701965332031,
+                        0.8468084931373596,
+                        0.9106382727622986,
+                        0.8829787373542786
+                    ],
+                    "loss": [
+                        0.5824435353279114,
+                        0.570375919342041,
+                        0.4010928273200989,
+                        0.6044806241989136,
+                        0.4838831424713135,
+                        0.3957720398902893,
+                        0.5693767666816711,
+                        0.43886563181877136,
+                        0.3896019756793976,
+                        0.43598392605781555
+                    ],
+                    "build time": [
+                        4.980982780456543,
+                        4.625810861587524,
+                        4.971089839935303,
+                        4.619600534439087,
+                        5.092112064361572,
+                        4.942054510116577,
+                        4.617391109466553,
+                        5.043683290481567,
+                        4.9943296909332275,
+                        5.078203439712524
+                    ],
+                    "timestamp": 1644512454
+                },
+                "ESN3": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 50
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 50,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.2,
+                            "spectral radius 0": 2.0,
+                            "spectral radius 1": 0.5,
+                            "spectral radius 2": 0.1,
+                            "use G.S.R.": false,
+                            "minmax": 0.30000000000000004,
+                            "input scaling 0": 1.5000000000000002,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.013091354697253083
+                        }
+                    },
+                    "accuracy": [
+                        0.7617021203041077,
+                        0.7382978796958923,
+                        0.7936170101165771,
+                        0.785106360912323,
+                        0.7531914710998535,
+                        0.806382954120636,
+                        0.7382978796958923,
+                        0.6872340440750122,
+                        0.7404255270957947,
+                        0.8212766051292419
+                    ],
+                    "loss": [
+                        0.7583547830581665,
+                        0.7878092527389526,
+                        0.6146746277809143,
+                        0.7134300470352173,
+                        0.7789638042449951,
+                        0.640849232673645,
+                        0.9686258435249329,
+                        0.9680866599082947,
+                        0.8094577193260193,
+                        0.5778459310531616
+                    ],
+                    "build time": [
+                        5.087736129760742,
+                        4.041609048843384,
+                        5.030179262161255,
+                        5.008206605911255,
+                        3.7433016300201416,
+                        5.2179224491119385,
+                        3.9147164821624756,
+                        5.247867107391357,
+                        3.0382299423217773,
+                        4.121362209320068
+                    ],
+                    "timestamp": 1644512498
+                },
+                "ESN4": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 50
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "partition 0": 0.7660000000000001,
+                            "partition 1": 0.1,
+                            "partition 2": 0.43300000000000005,
+                            "units": 50,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.0,
+                            "spectral radius 0": 1.0,
+                            "spectral radius 1": 0.5,
+                            "spectral radius 2": 1.2000000000000002,
+                            "use G.S.R.": false,
+                            "minmax": 1.6,
+                            "input scaling 0": 0.8,
+                            "bias scaling 0": 1.4000000000000001,
+                            "leaky": 0.1,
+                            "learning rate": 0.1
+                        }
+                    },
+                    "accuracy": [
+                        0.7702127695083618,
+                        0.827659547328949,
+                        0.785106360912323,
+                        0.8170212507247925,
+                        0.8595744967460632,
+                        0.7744680643081665,
+                        0.7978723645210266,
+                        0.8148936033248901,
+                        0.827659547328949,
+                        0.8531914949417114
+                    ],
+                    "loss": [
+                        0.7566671371459961,
+                        0.5648285150527954,
+                        0.6923317313194275,
+                        0.5602236390113831,
+                        0.44481661915779114,
+                        0.7046539187431335,
+                        0.6176577806472778,
+                        0.5915372967720032,
+                        0.6151872277259827,
+                        0.4683874845504761
+                    ],
+                    "build time": [
+                        2.6117360591888428,
+                        2.9900307655334473,
+                        1.643589973449707,
+                        2.5315842628479004,
+                        2.9452412128448486,
+                        3.002091884613037,
+                        2.701799154281616,
+                        2.340731620788574,
+                        2.9766204357147217,
+                        2.5072338581085205
+                    ],
+                    "timestamp": 1644512525
+                }
+            },
+            "Units 75": {
+                "ESN1": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 75
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 75,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.5000000000000002,
+                            "input scaling 0": 0.1,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.1
+                        }
+                    },
+                    "accuracy": [
+                        0.9212765693664551,
+                        0.9255319237709045,
+                        0.7680851221084595,
+                        0.9531915187835693,
+                        0.8872340321540833,
+                        0.8829787373542786,
+                        0.8893616795539856,
+                        0.8936170339584351,
+                        0.9468085169792175,
+                        0.914893627166748
+                    ],
+                    "loss": [
+                        0.3002738356590271,
+                        0.24894456565380096,
+                        0.8117545247077942,
+                        0.2167772650718689,
+                        0.37399065494537354,
+                        0.42512235045433044,
+                        0.4082009792327881,
+                        0.49568837881088257,
+                        0.2379845380783081,
+                        0.2990570068359375
+                    ],
+                    "build time": [
+                        2.564086675643921,
+                        1.9520938396453857,
+                        1.7006783485412598,
+                        1.8727679252624512,
+                        2.073361873626709,
+                        2.214143991470337,
+                        1.5161428451538086,
+                        2.381798028945923,
+                        1.955146074295044,
+                        2.1453518867492676
+                    ],
+                    "timestamp": 1644512545
+                },
+                "ESN2": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 75
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 75,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.2000000000000002,
+                            "spectral radius 1": 2.0,
+                            "spectral radius 2": 0.9,
+                            "use G.S.R.": false,
+                            "input scaling 0": 0.30000000000000004,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.0031946365343747825
+                        }
+                    },
+                    "accuracy": [
+                        0.8446808457374573,
+                        0.914893627166748,
+                        0.778723418712616,
+                        0.8829787373542786,
+                        0.8595744967460632,
+                        0.9106382727622986,
+                        0.8978723287582397,
+                        0.8553191423416138,
+                        0.8361701965332031,
+                        0.7872340679168701
+                    ],
+                    "loss": [
+                        0.6677440404891968,
+                        0.3728262782096863,
+                        0.9285213351249695,
+                        0.5063506364822388,
+                        0.5766919255256653,
+                        0.36307603120803833,
+                        0.4801086485385895,
+                        0.6166633367538452,
+                        0.5750106573104858,
+                        0.7795814871788025
+                    ],
+                    "build time": [
+                        5.575042963027954,
+                        5.350561618804932,
+                        5.3820481300354,
+                        5.405800819396973,
+                        5.294924974441528,
+                        5.320004224777222,
+                        5.255809545516968,
+                        5.348769664764404,
+                        6.142382383346558,
+                        5.648427248001099
+                    ],
+                    "timestamp": 1644512600
+                },
+                "ESN3": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 75
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 75,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 1.0,
+                            "spectral radius 0": 2.0,
+                            "spectral radius 1": 0.1,
+                            "spectral radius 2": 1.5000000000000002,
+                            "use G.S.R.": false,
+                            "minmax": 0.1,
+                            "input scaling 0": 0.8,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.1
+                        }
+                    },
+                    "accuracy": [
+                        0.8978723287582397,
+                        0.8468084931373596,
+                        0.8297872543334961,
+                        0.8085106611251831,
+                        0.8340425491333008,
+                        0.8893616795539856,
+                        0.8404255509376526,
+                        0.8787233829498291,
+                        0.8808510899543762,
+                        0.8531914949417114
+                    ],
+                    "loss": [
+                        0.4048781394958496,
+                        0.48340535163879395,
+                        0.6340230703353882,
+                        0.6818099021911621,
+                        0.5286930799484253,
+                        0.47655296325683594,
+                        0.4954422414302826,
+                        0.44474688172340393,
+                        0.41994449496269226,
+                        0.48467811942100525
+                    ],
+                    "build time": [
+                        2.7659873962402344,
+                        1.2709319591522217,
+                        1.8974058628082275,
+                        1.661548137664795,
+                        2.0017569065093994,
+                        1.7841570377349854,
+                        1.817547082901001,
+                        1.7969839572906494,
+                        1.9812347888946533,
+                        1.627912998199463
+                    ],
+                    "timestamp": 1644512619
+                },
+                "ESN4": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 75
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "partition 0": 0.7660000000000001,
+                            "partition 1": 0.1,
+                            "partition 2": 0.1,
+                            "units": 75,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.0,
+                            "spectral radius 0": 2.0,
+                            "spectral radius 1": 1.4000000000000001,
+                            "spectral radius 2": 0.1,
+                            "use G.S.R.": false,
+                            "minmax": 0.1,
+                            "input scaling 0": 1.5000000000000002,
+                            "bias scaling 0": 1.5000000000000002,
+                            "leaky": 0.1,
+                            "learning rate": 0.0017321205411280696
+                        }
+                    },
+                    "accuracy": [
+                        0.8872340321540833,
+                        0.8787233829498291,
+                        0.848936140537262,
+                        0.8829787373542786,
+                        0.848936140537262,
+                        0.8446808457374573,
+                        0.8723404407501221,
+                        0.8553191423416138,
+                        0.8659574389457703,
+                        0.8936170339584351
+                    ],
+                    "loss": [
+                        0.38714563846588135,
+                        0.4590051472187042,
+                        0.4656495153903961,
+                        0.4156830906867981,
+                        0.4841470718383789,
+                        0.5248934030532837,
+                        0.433302104473114,
+                        0.5039038062095642,
+                        0.4457590579986572,
+                        0.376542866230011
+                    ],
+                    "build time": [
+                        5.435130596160889,
+                        5.485075235366821,
+                        5.3868372440338135,
+                        5.353575706481934,
+                        5.105111598968506,
+                        5.340912103652954,
+                        5.248831272125244,
+                        5.27712082862854,
+                        5.218708276748657,
+                        5.935659170150757
+                    ],
+                    "timestamp": 1644512674
+                }
+            },
+            "Units 100": {
+                "ESN1": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 100
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 100,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.7000000000000002,
+                            "input scaling 0": 0.4,
+                            "bias scaling 0": 0.30000000000000004,
+                            "leaky": 0.1,
+                            "learning rate": 0.01103505888291693
+                        }
+                    },
+                    "accuracy": [
+                        0.9595744609832764,
+                        0.9595744609832764,
+                        0.957446813583374,
+                        0.9404255151748657,
+                        0.9212765693664551,
+                        0.957446813583374,
+                        0.9446808695793152,
+                        0.9382978677749634,
+                        0.9510638117790222,
+                        0.9446808695793152
+                    ],
+                    "loss": [
+                        0.13810595870018005,
+                        0.19245682656764984,
+                        0.16766349971294403,
+                        0.21191920340061188,
+                        0.29738086462020874,
+                        0.1529485434293747,
+                        0.20579269528388977,
+                        0.2670598030090332,
+                        0.23498046398162842,
+                        0.18799234926700592
+                    ],
+                    "build time": [
+                        3.9384920597076416,
+                        3.543198347091675,
+                        3.8024652004241943,
+                        3.0118916034698486,
+                        2.4510066509246826,
+                        2.672779083251953,
+                        4.108741760253906,
+                        4.039013862609863,
+                        2.9800236225128174,
+                        4.097595930099487
+                    ],
+                    "timestamp": 1644512709
+                },
+                "ESN2": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 100
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 100,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.1,
+                            "spectral radius 1": 2.0,
+                            "spectral radius 2": 2.0,
+                            "use G.S.R.": false,
+                            "input scaling 0": 1.5000000000000002,
+                            "bias scaling 0": 0.7000000000000001,
+                            "leaky": 0.1,
+                            "learning rate": 0.021263677453091743
+                        }
+                    },
+                    "accuracy": [
+                        0.9063829779624939,
+                        0.8702127933502197,
+                        0.8999999761581421,
+                        0.8617021441459656,
+                        0.8914893865585327,
+                        0.8829787373542786,
+                        0.9021276831626892,
+                        0.8638297915458679,
+                        0.8765957355499268,
+                        0.8787233829498291
+                    ],
+                    "loss": [
+                        0.3373686671257019,
+                        0.36364081501960754,
+                        0.29196321964263916,
+                        0.48376429080963135,
+                        0.3235401511192322,
+                        0.4594458043575287,
+                        0.3154444992542267,
+                        0.43688780069351196,
+                        0.39396044611930847,
+                        0.3634127080440521
+                    ],
+                    "build time": [
+                        3.0654654502868652,
+                        3.764864683151245,
+                        2.7203598022460938,
+                        2.49391770362854,
+                        2.5493502616882324,
+                        2.3668181896209717,
+                        2.360891103744507,
+                        1.9248459339141846,
+                        2.1005213260650635,
+                        3.1779539585113525
+                    ],
+                    "timestamp": 1644512735
+                },
+                "ESN3": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 100
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 100,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 1.0,
+                            "spectral radius 0": 0.8,
+                            "spectral radius 1": 1.3000000000000003,
+                            "spectral radius 2": 0.6,
+                            "use G.S.R.": false,
+                            "minmax": 0.1,
+                            "input scaling 0": 1.0,
+                            "bias scaling 0": 0.7000000000000001,
+                            "leaky": 1.0,
+                            "learning rate": 0.002402542621971231
+                        }
+                    },
+                    "accuracy": [
+                        0.44680851697921753,
+                        0.4680851101875305,
+                        0.4510638415813446,
+                        0.4297872483730316,
+                        0.43191489577293396,
+                        0.42553192377090454,
+                        0.44255319237709045,
+                        0.4234042465686798,
+                        0.4489361643791199,
+                        0.4234042465686798
+                    ],
+                    "loss": [
+                        1.7720346450805664,
+                        1.73199462890625,
+                        1.783481478691101,
+                        1.7757682800292969,
+                        1.7851626873016357,
+                        1.8116720914840698,
+                        1.8107117414474487,
+                        1.8133127689361572,
+                        1.7376552820205688,
+                        1.7943753004074097
+                    ],
+                    "build time": [
+                        6.1315999031066895,
+                        5.160950183868408,
+                        5.043975591659546,
+                        4.9032227993011475,
+                        3.742147445678711,
+                        5.457162380218506,
+                        5.513347148895264,
+                        3.9408981800079346,
+                        5.450423717498779,
+                        4.720896482467651
+                    ],
+                    "timestamp": 1644512786
+                },
+                "ESN4": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 100
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "partition 0": 0.7660000000000001,
+                            "partition 1": 0.1,
+                            "partition 2": 0.43300000000000005,
+                            "units": 100,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.2,
+                            "spectral radius 0": 1.1,
+                            "spectral radius 1": 0.2,
+                            "spectral radius 2": 0.7000000000000001,
+                            "use G.S.R.": false,
+                            "minmax": 2.0,
+                            "input scaling 0": 1.0,
+                            "bias scaling 0": 1.5000000000000002,
+                            "leaky": 0.1,
+                            "learning rate": 0.1
+                        }
+                    },
+                    "accuracy": [
+                        0.5276595950126648,
+                        0.6319149136543274,
+                        0.5744680762290955,
+                        0.5978723168373108,
+                        0.5914893746376038,
+                        0.5702127814292908,
+                        0.5106382966041565,
+                        0.4723404347896576,
+                        0.6595744490623474,
+                        0.5468084812164307
+                    ],
+                    "loss": [
+                        1.833358883857727,
+                        1.8349816799163818,
+                        1.9931702613830566,
+                        1.463817834854126,
+                        1.6314771175384521,
+                        1.9445182085037231,
+                        2.0917673110961914,
+                        2.1298673152923584,
+                        1.3797271251678467,
+                        1.6771982908248901
+                    ],
+                    "build time": [
+                        1.5825328826904297,
+                        1.444108486175537,
+                        1.6177778244018555,
+                        1.2685654163360596,
+                        1.3272132873535156,
+                        1.336737871170044,
+                        1.2724690437316895,
+                        1.2896356582641602,
+                        1.184311866760254,
+                        1.189436912536621
+                    ],
+                    "timestamp": 1644512799
+                }
+            },
+            "Units 150": {
+                "ESN1": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 150
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 150,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.3000000000000003,
+                            "input scaling 0": 0.2,
+                            "bias scaling 0": 0.5,
+                            "leaky": 0.1,
+                            "learning rate": 0.005383023917818658
+                        }
+                    },
+                    "accuracy": [
+                        0.936170220375061,
+                        0.9468085169792175,
+                        0.914893627166748,
+                        0.9553191661834717,
+                        0.9446808695793152,
+                        0.9489361643791199,
+                        0.9617021083831787,
+                        0.9595744609832764,
+                        0.9510638117790222,
+                        0.9319148659706116
+                    ],
+                    "loss": [
+                        0.2291254699230194,
+                        0.2537948787212372,
+                        0.3422723710536957,
+                        0.19464696943759918,
+                        0.2643515169620514,
+                        0.18710611760616302,
+                        0.1676950603723526,
+                        0.1640634536743164,
+                        0.1466587483882904,
+                        0.24931897222995758
+                    ],
+                    "build time": [
+                        5.719200611114502,
+                        5.355163097381592,
+                        6.147185564041138,
+                        5.93183970451355,
+                        5.920757055282593,
+                        5.857125282287598,
+                        5.847353935241699,
+                        5.762151002883911,
+                        5.641591310501099,
+                        4.3718342781066895
+                    ],
+                    "timestamp": 1644512856
+                },
+                "ESN2": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 150
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 150,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 1.7000000000000002,
+                            "spectral radius 1": 1.1,
+                            "spectral radius 2": 1.3000000000000003,
+                            "use G.S.R.": false,
+                            "input scaling 0": 0.1,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.018752976015896265
+                        }
+                    },
+                    "accuracy": [
+                        0.9510638117790222,
+                        0.9042553305625916,
+                        0.9425531625747681,
+                        0.9702127575874329,
+                        0.9382978677749634,
+                        0.9595744609832764,
+                        0.9468085169792175,
+                        0.9297872185707092,
+                        0.9255319237709045,
+                        0.9510638117790222
+                    ],
+                    "loss": [
+                        0.18846870958805084,
+                        0.33812516927719116,
+                        0.21268288791179657,
+                        0.11323705315589905,
+                        0.23219116032123566,
+                        0.18212862312793732,
+                        0.2038131058216095,
+                        0.2542700469493866,
+                        0.2842443287372589,
+                        0.17373280227184296
+                    ],
+                    "build time": [
+                        3.4879209995269775,
+                        3.904750108718872,
+                        3.368130922317505,
+                        4.30411434173584,
+                        4.348551511764526,
+                        2.920236349105835,
+                        3.8790218830108643,
+                        2.7720367908477783,
+                        4.749736070632935,
+                        3.3323569297790527
+                    ],
+                    "timestamp": 1644512893
+                },
+                "ESN3": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 150
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 150,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.0,
+                            "spectral radius 0": 0.1,
+                            "spectral radius 1": 1.7000000000000002,
+                            "spectral radius 2": 0.5,
+                            "use G.S.R.": false,
+                            "minmax": 2.0,
+                            "input scaling 0": 1.5000000000000002,
+                            "bias scaling 0": 1.5000000000000002,
+                            "leaky": 0.1,
+                            "learning rate": 0.1
+                        }
+                    },
+                    "accuracy": [
+                        0.672340452671051,
+                        0.6170212626457214,
+                        0.6021276712417603,
+                        0.7765957713127136,
+                        0.7063829898834229,
+                        0.6659574508666992,
+                        0.7042553424835205,
+                        0.6127659678459167,
+                        0.6659574508666992,
+                        0.7063829898834229
+                    ],
+                    "loss": [
+                        1.1152293682098389,
+                        1.3868016004562378,
+                        1.5171217918395996,
+                        0.9132121801376343,
+                        1.0456650257110596,
+                        1.2120475769042969,
+                        1.1026856899261475,
+                        1.461276888847351,
+                        1.2591608762741089,
+                        1.0258244276046753
+                    ],
+                    "build time": [
+                        1.7634797096252441,
+                        1.750272512435913,
+                        2.1854684352874756,
+                        2.69001841545105,
+                        2.0014214515686035,
+                        1.8336546421051025,
+                        2.0565145015716553,
+                        1.7128188610076904,
+                        1.9546005725860596,
+                        1.9142677783966064
+                    ],
+                    "timestamp": 1644512914
+                },
+                "ESN4": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 150
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "partition 0": 0.7660000000000001,
+                            "partition 1": 0.43300000000000005,
+                            "partition 2": 0.1,
+                            "units": 150,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.0,
+                            "spectral radius 0": 2.0,
+                            "spectral radius 1": 2.0,
+                            "spectral radius 2": 0.1,
+                            "use G.S.R.": false,
+                            "minmax": 2.0,
+                            "input scaling 0": 1.3000000000000003,
+                            "bias scaling 0": 1.5000000000000002,
+                            "leaky": 0.1,
+                            "learning rate": 0.006242777498597624
+                        }
+                    },
+                    "accuracy": [
+                        0.9468085169792175,
+                        0.9297872185707092,
+                        0.9170212745666504,
+                        0.9297872185707092,
+                        0.9319148659706116,
+                        0.9297872185707092,
+                        0.9212765693664551,
+                        0.9404255151748657,
+                        0.9446808695793152,
+                        0.9404255151748657
+                    ],
+                    "loss": [
+                        0.2587468922138214,
+                        0.265020489692688,
+                        0.28352126479148865,
+                        0.2368326336145401,
+                        0.2542354166507721,
+                        0.2782440781593323,
+                        0.27735984325408936,
+                        0.24509930610656738,
+                        0.20625366270542145,
+                        0.18912723660469055
+                    ],
+                    "build time": [
+                        2.8376212120056152,
+                        2.408871650695801,
+                        3.070289134979248,
+                        3.2894675731658936,
+                        2.43837833404541,
+                        3.02876877784729,
+                        2.808433771133423,
+                        2.9606575965881348,
+                        3.1162240505218506,
+                        3.560770273208618
+                    ],
+                    "timestamp": 1644512943
+                }
+            },
+            "Units 250": {
+                "ESN1": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 250
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 250,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 2.0,
+                            "input scaling 0": 0.6,
+                            "bias scaling 0": 0.2,
+                            "leaky": 0.1,
+                            "learning rate": 0.006087028522350387
+                        }
+                    },
+                    "accuracy": [
+                        0.9638298153877258,
+                        0.9702127575874329,
+                        0.9659574627876282,
+                        0.9702127575874329,
+                        0.9723404049873352,
+                        0.9680851101875305,
+                        0.9595744609832764,
+                        0.9531915187835693,
+                        0.9723404049873352,
+                        0.9659574627876282
+                    ],
+                    "loss": [
+                        0.14528852701187134,
+                        0.09235215187072754,
+                        0.10523474961519241,
+                        0.11947452276945114,
+                        0.09637553244829178,
+                        0.09967632591724396,
+                        0.16953618824481964,
+                        0.16752499341964722,
+                        0.15121830999851227,
+                        0.1487249732017517
+                    ],
+                    "build time": [
+                        2.889392137527466,
+                        2.7095584869384766,
+                        3.2108211517333984,
+                        3.194561719894409,
+                        3.339327573776245,
+                        3.5246667861938477,
+                        3.5262582302093506,
+                        2.6025614738464355,
+                        2.8168108463287354,
+                        3.4493963718414307
+                    ],
+                    "timestamp": 1644512975
+                },
+                "ESN2": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 250
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 250,
+                            "connectivity 0": 1.0,
+                            "spectral radius 0": 2.0,
+                            "spectral radius 1": 1.5000000000000002,
+                            "spectral radius 2": 0.1,
+                            "use G.S.R.": false,
+                            "input scaling 0": 0.7000000000000001,
+                            "bias scaling 0": 0.1,
+                            "leaky": 0.1,
+                            "learning rate": 0.0034878222274005812
+                        }
+                    },
+                    "accuracy": [
+                        0.9765957593917847,
+                        0.9638298153877258,
+                        0.957446813583374,
+                        0.9638298153877258,
+                        0.9617021083831787,
+                        0.9702127575874329,
+                        0.9595744609832764,
+                        0.9531915187835693,
+                        0.9531915187835693,
+                        0.9404255151748657
+                    ],
+                    "loss": [
+                        0.0904221385717392,
+                        0.15364760160446167,
+                        0.1585807353258133,
+                        0.15485353767871857,
+                        0.16248999536037445,
+                        0.11979793757200241,
+                        0.11755010485649109,
+                        0.14592057466506958,
+                        0.1708708256483078,
+                        0.23399078845977783
+                    ],
+                    "build time": [
+                        4.635553598403931,
+                        3.4125099182128906,
+                        3.358548641204834,
+                        4.9293060302734375,
+                        3.3254575729370117,
+                        5.087015628814697,
+                        5.003824710845947,
+                        4.769652605056763,
+                        3.979295253753662,
+                        4.183872699737549
+                    ],
+                    "timestamp": 1644513018
+                },
+                "ESN3": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 250
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "units": 250,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.0,
+                            "spectral radius 0": 1.2000000000000002,
+                            "spectral radius 1": 1.8000000000000003,
+                            "spectral radius 2": 2.0,
+                            "use G.S.R.": false,
+                            "minmax": 0.1,
+                            "input scaling 0": 1.1,
+                            "bias scaling 0": 0.30000000000000004,
+                            "leaky": 0.2,
+                            "learning rate": 0.00663344962546156
+                        }
+                    },
+                    "accuracy": [
+                        0.8255318999290466,
+                        0.8446808457374573,
+                        0.8872340321540833,
+                        0.8553191423416138,
+                        0.8702127933502197,
+                        0.8893616795539856,
+                        0.8765957355499268,
+                        0.8829787373542786,
+                        0.8638297915458679,
+                        0.8723404407501221
+                    ],
+                    "loss": [
+                        0.5218232870101929,
+                        0.5068750381469727,
+                        0.42964959144592285,
+                        0.478537380695343,
+                        0.4197637438774109,
+                        0.39378511905670166,
+                        0.4163735806941986,
+                        0.4699092507362366,
+                        0.5198283195495605,
+                        0.45566585659980774
+                    ],
+                    "build time": [
+                        3.264406442642212,
+                        3.0298519134521484,
+                        2.408169746398926,
+                        2.571812391281128,
+                        2.2249412536621094,
+                        2.6299407482147217,
+                        3.82942533493042,
+                        3.1447911262512207,
+                        3.5563113689422607,
+                        3.6342201232910156
+                    ],
+                    "timestamp": 1644513048
+                },
+                "ESN4": {
+                    "hyperparameters": {
+                        "space": [
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "partition 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.0,
+                                    "step": 0.333,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "units",
+                                    "conditions": [],
+                                    "value": 250
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "connectivity 0",
+                                    "conditions": [],
+                                    "value": 1.0
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "connectivity X->Y",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 1",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "spectral radius 2",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Fixed",
+                                "config": {
+                                    "name": "use G.S.R.",
+                                    "conditions": [],
+                                    "value": false
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "minmax",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 2.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "input scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "bias scaling 0",
+                                    "default": 0.1,
+                                    "conditions": [],
+                                    "min_value": 0.1,
+                                    "max_value": 1.5,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "leaky",
+                                    "default": 0.0,
+                                    "conditions": [],
+                                    "min_value": 0.0,
+                                    "max_value": 1.0,
+                                    "step": 0.1,
+                                    "sampling": null
+                                }
+                            },
+                            {
+                                "class_name": "Float",
+                                "config": {
+                                    "name": "learning rate",
+                                    "default": 1e-05,
+                                    "conditions": [],
+                                    "min_value": 1e-05,
+                                    "max_value": 0.1,
+                                    "step": null,
+                                    "sampling": "log"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "partition 0": 0.43300000000000005,
+                            "partition 1": 0.7660000000000001,
+                            "partition 2": 0.1,
+                            "units": 250,
+                            "connectivity 0": 1.0,
+                            "connectivity X->Y": 0.0,
+                            "spectral radius 0": 2.0,
+                            "spectral radius 1": 2.0,
+                            "spectral radius 2": 0.1,
+                            "use G.S.R.": false,
+                            "minmax": 0.2,
+                            "input scaling 0": 1.1,
+                            "bias scaling 0": 1.5000000000000002,
+                            "leaky": 0.1,
+                            "learning rate": 0.0847840686665067
+                        }
+                    },
+                    "accuracy": [
+                        0.9404255151748657,
+                        0.9404255151748657,
+                        0.9595744609832764,
+                        0.9212765693664551,
+                        0.9382978677749634,
+                        0.9382978677749634,
+                        0.957446813583374,
+                        0.9446808695793152,
+                        0.957446813583374,
+                        0.9382978677749634
+                    ],
+                    "loss": [
+                        0.41143184900283813,
+                        0.44723811745643616,
+                        0.3439173698425293,
+                        0.5000026822090149,
+                        0.4397439956665039,
+                        0.47038355469703674,
+                        0.3578818142414093,
+                        0.4322710335254669,
+                        0.3973083794116974,
+                        0.2963341772556305
+                    ],
+                    "build time": [
+                        1.71675705909729,
+                        1.7374200820922852,
+                        1.6013386249542236,
+                        1.530191421508789,
+                        1.6670091152191162,
+                        1.7894020080566406,
+                        2.4048709869384766,
+                        1.725846767425537,
+                        1.9529006481170654,
+                        1.683922529220581
+                    ],
+                    "timestamp": 1644513066
+                }
+            }
+        }
+    }
+}

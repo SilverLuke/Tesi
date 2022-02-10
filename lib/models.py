@@ -20,16 +20,17 @@ class ESNInterface(keras.Model):
         self.reservoir = None
         self.readout = None
 
-    def compile(self, **kwargs):
-        self.readout.compile(**kwargs)
+    def compile(self, *args, **kwargs):
+        self.readout.compile(*args, **kwargs)
 
     def call(self, inputs):
         reservoir_states = self.reservoir(inputs)
         output = self.readout(reservoir_states)
         return output
 
-    def fit(self, x, y, **kwargs):
+    def fit(self, x, y, *args, **kwargs):
         # applies the reservoirs to all the input sequences in the training set
+        # print("X:", len(x), "\nY:", len(y))
         x_train_out = self.reservoir(x)
 
         # does the same for the validation set
@@ -38,11 +39,11 @@ class ESNInterface(keras.Model):
         kwargs['validation_data'] = (x_val_out, y_val)
 
         # trains the readout with the reservoir states just computed
-        return self.readout.fit(x_train_out, y, **kwargs)
+        return self.readout.fit(x_train_out, y, *args, **kwargs)
 
-    def evaluate(self, x, y, **kwargs):
+    def evaluate(self, x, y, *args, **kwargs):
         x_train_out = self.reservoir(x)
-        return self.readout.evaluate(x_train_out, y, **kwargs)
+        return self.readout.evaluate(x_train_out, y, *args, **kwargs)
 
     @property
     def units(self):
@@ -154,8 +155,8 @@ class ESN1(ESNInterface):
     def __init__(self,
                  units: int,
                  output_units: int,
-                 output_activation,
-                 activation=tf.nn.tanh,
+                 reservoir_activation=tf.keras.activations.tanh,
+                 readout_activation=tf.nn.tanh,
                  spectral_radius: float = 0.9,
                  connectivity: float = 1.,
                  input_scaling: float = 1.,
@@ -170,9 +171,9 @@ class ESN1(ESNInterface):
         )
 
         if connectivity == 1.0:
-            recurrent_kernel_init = RecurrentFullConnected(spectral_radius)
+            recurrent_kernel_init = FullConnected(spectral_radius)
         else:
-            recurrent_kernel_init = RecurrentStandard(connectivity, spectral_radius)
+            recurrent_kernel_init = RecurrentKernel(connectivity, spectral_radius)
 
         self.use_bias = bias_scaling is not None
         if self.use_bias:
@@ -182,31 +183,16 @@ class ESN1(ESNInterface):
 
         self.reservoir = keras.Sequential([
             keras.layers.Masking(),
-            lib.esn.ESN(units, leaky, activation=activation,
+            lib.esn.ESN(units, leaky,
+                        activation=reservoir_activation,
+                        use_bias=self.use_bias,
                         kernel_initializer=kernel_init,
                         recurrent_initializer=recurrent_kernel_init,
                         bias_initializer=bias_init),
         ])
         self.readout = keras.Sequential([
-            keras.layers.Dense(output_units, activation=output_activation, name="readout")
+            keras.layers.Dense(output_units, activation=readout_activation, name="readout")
         ])
-
-
-def generate_split_kernel_inits(input_scaling, sub_reservoirs):
-    if isinstance(input_scaling, list):
-        if len(input_scaling) != sub_reservoirs:
-            raise ValueError("Length of input_scaling must be equal to sub_reservoirs. {} != {}".
-                             format(len(input_scaling), sub_reservoirs))
-        init = [tf.keras.initializers.RandomUniform(minval=-input_scaling[i], maxval=input_scaling[i]) for i in
-                range(sub_reservoirs)]
-    elif isinstance(input_scaling, float) or isinstance(input_scaling, int):
-        init = [tf.keras.initializers.RandomUniform(minval=-input_scaling, maxval=input_scaling) for _ in
-                range(sub_reservoirs)]
-    elif input_scaling is None:
-        init = None
-    else:
-        raise ValueError("Input scaling should be a int / float or list of int/float")
-    return init
 
 
 class ESN2(ESNInterface):
@@ -214,8 +200,9 @@ class ESN2(ESNInterface):
                  units: int,
                  sub_reservoirs: int,
                  output_units: int,
-                 output_activation,
                  input_scaling,  # This can be a vec or int / float
+                 reservoir_activation=tf.keras.activations.tanh,
+                 readout_activation=tf.nn.tanh,
                  bias_scaling=None,  # This can be a vec or int / float or None
                  gsr: Optional[float] = None,
                  spectral_radius=0.9,
@@ -225,8 +212,7 @@ class ESN2(ESNInterface):
                  ):
         super().__init__(**kwargs)
 
-        init = generate_split_kernel_inits(input_scaling, sub_reservoirs)
-        kernel_init = SplitKernel(sub_reservoirs, initializers=init)
+        kernel_init = SplitKernel(sub_reservoirs, input_scaling)
         recurrent_kernel_init = Type2(sub_reservoirs, connectivity, spectral_radius, gsr=gsr)
         self.use_bias = bias_scaling is not None
         if self.use_bias:
@@ -236,11 +222,15 @@ class ESN2(ESNInterface):
 
         self.reservoir = keras.Sequential([
             keras.layers.Masking(),
-            lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
+            lib.esn.ESN(units, leaky,
+                        activation=reservoir_activation,
+                        use_bias=self.use_bias,
+                        kernel_initializer=kernel_init,
+                        recurrent_initializer=recurrent_kernel_init,
                         bias_initializer=bias_init),
         ])
         self.readout = keras.Sequential([
-            keras.layers.Dense(output_units, activation=output_activation, name="readout")
+            keras.layers.Dense(output_units, activation=readout_activation, name="readout")
         ])
 
 
@@ -249,9 +239,11 @@ class ESN3(ESNInterface):
                  units: int,
                  sub_reservoirs: int,
                  output_units: int,
-                 output_activation,
                  input_scaling,
+                 reservoir_activation=tf.keras.activations.tanh,
+                 readout_activation=tf.nn.tanh,
                  bias_scaling=None,
+                 off_diagonal=0.5,
                  connectivity=1.,
                  spectral_radius=0.9,
                  gsr: Optional[float] = None,
@@ -260,9 +252,8 @@ class ESN3(ESNInterface):
                  ):
         super().__init__(**kwargs)
 
-        init = generate_split_kernel_inits(input_scaling, sub_reservoirs)
-        kernel_init = SplitKernel(sub_reservoirs, initializers=init)
-        recurrent_kernel_init = Type3(sub_reservoirs, connectivity, spectral_radius, gsr=gsr)
+        kernel_init = SplitKernel(sub_reservoirs, input_scaling)
+        recurrent_kernel_init = Type3(sub_reservoirs, connectivity, spectral_radius, off_diagonal, gsr=gsr)
         self.use_bias = bias_scaling is not None
         if self.use_bias:
             bias_init = SplitBias(bias_scaling, sub_reservoirs)
@@ -271,11 +262,15 @@ class ESN3(ESNInterface):
 
         self.reservoir = keras.Sequential([
             keras.layers.Masking(),
-            lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
+            lib.esn.ESN(units, leaky,
+                        activation=reservoir_activation,
+                        use_bias=self.use_bias,
+                        kernel_initializer=kernel_init,
+                        recurrent_initializer=recurrent_kernel_init,
                         bias_initializer=bias_init),
         ])
         self.readout = keras.Sequential([
-            keras.layers.Dense(output_units, activation=output_activation, name="readout")
+            keras.layers.Dense(output_units, activation=readout_activation, name="readout")
         ])
 
 
@@ -285,8 +280,10 @@ class ESN4(ESNInterface):
                  sub_reservoirs: int,
                  partitions: TensorLike,
                  output_units: int,
-                 output_activation,
                  input_scaling,
+                 off_diagonal,
+                 reservoir_activation=tf.keras.activations.tanh,
+                 readout_activation=tf.nn.tanh,
                  bias_scaling=None,
                  connectivity=1.,
                  spectral_radius=0.9,
@@ -295,10 +292,8 @@ class ESN4(ESNInterface):
                  **kwargs
                  ):
         super().__init__(**kwargs)
-
-        init = generate_split_kernel_inits(input_scaling, sub_reservoirs)
-        kernel_init = SplitKernel(sub_reservoirs, partitions=partitions, initializers=init)
-        recurrent_kernel_init = Type4(sub_reservoirs, partitions, connectivity, spectral_radius, gsr=gsr)
+        kernel_init = SplitKernel(sub_reservoirs, input_scaling, partitions=partitions)
+        recurrent_kernel_init = Type4(sub_reservoirs, partitions, connectivity, spectral_radius, off_diagonal, gsr=gsr)
 
         self.use_bias = bias_scaling is not None
         if self.use_bias:
@@ -308,9 +303,12 @@ class ESN4(ESNInterface):
 
         self.reservoir = keras.Sequential([
             keras.layers.Masking(),
-            lib.esn.ESN(units, leaky, kernel_initializer=kernel_init, recurrent_initializer=recurrent_kernel_init,
+            lib.esn.ESN(units, leaky,
+                        activation=reservoir_activation,
+                        kernel_initializer=kernel_init,
+                        recurrent_initializer=recurrent_kernel_init,
                         bias_initializer=bias_init),
         ])
         self.readout = keras.Sequential([
-            keras.layers.Dense(output_units, activation=output_activation, name="readout")
+            keras.layers.Dense(output_units, activation=readout_activation, name="readout")
         ])

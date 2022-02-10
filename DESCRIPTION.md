@@ -44,7 +44,7 @@ Tutto ciò è stato implementato come un grande reservoir che contiene al suo in
 anch'esso diviso in N matrici di dimensione Units / N X Units / N. 
 Esempio di distribuzione dei pesi:
 
-![image](plots/weights/ArticularyWordRecognition/best_models/best_esn2.svg)
+![image](plots/weights/CharacterTrajectories/single_s.r./units_50_esn2.svg)
 
 Richiede come principale parametro aggiuntivo il numero di sub-reservoir da generare al proprio interno. 
 Alcuni parametri si estendono per funzionalità aggiuntive per effettuare un tuning più fine sono:
@@ -57,7 +57,7 @@ Ma possono essere usati come valore per avere i sub-reservoir con gli stessi par
 
 In questo modello vengono aggiunte le interconnessioni tra i sub-reservoir presenti nel modello ESN2, il valore di queste interconnessioni può essere trovato tramite models selection. 
 
-![image](plots/weights/ArticularyWordRecognition/best_models/best_esn3.svg)
+![image](plots/weights/CharacterTrajectories/multiple_s.r./units_50_esn3.svg)
 
 Non si aggiungono parametri si estende il vettore d'interconnessione a una matrice d'interconnessione tra gli N sub-reservoirs.
 
@@ -67,46 +67,72 @@ Non si aggiungono parametri si estende il vettore d'interconnessione a una matri
 Non ci sono modifiche logiche rispetto al modello ESN3, in questo "modello" c'è la possibilità di variare le dimensioni dei sub-reservoirs.
 
 Esempio di reservoirs con due sub-reservoir di dimensione differente
-![image](plots/weights/ArticularyWordRecognition/best_models/best_esn4.svg)
+![image](plots/weights/CharacterTrajectories/multiple_s.r./units_50_esn4.svg)
 
 # Esperimenti
 
 Al momento sono stati effettuati tipi/classi di esperimenti:
 
  - "Best model": un singolo esperimento dove tutti gli iper-parametri dei modelli sono cercati tramite model selection, cosi facendo si ottiene per ogni tipo di modello il modello con migliore accuracy (ma non succede sempre [BUG?])
- - "Fixed units": una serie di esperimenti dove il numero di unità viene fissato a 50 75 ... per esperimento; il fattore di connessione dei sub-reservoirs viene fissato a 1, e si utilizza un solo valore di inter-connessione tra i sub-reservoir per vedere come l'accuratezza aumenti all'aumentare del numero di unità
+ - "Multiple S.R.": una serie di esperimenti dove il numero di unità viene fissato a 50 75 100 150 250 per esperimento; il fattore di connessione dei sub-reservoirs viene fissato a 1, e si utilizza un solo valore di inter-connessione tra i sub-reservoir per vedere come l'accuratezza aumenti all'aumentare del numero di unità, tramite model selection si cercano N raggi spettrali per i sub reservoirs.
+ - "Single S.R.": uguale a "Multiple S.R." solo che si utilizza un raggio spettrale per gli N sub reservoirs.
 
 Ogni modello è stato ottimizzato tramite models selection per ogni singolo esperimento, così da ottenere la massima accuratezza ogni volta.
 Ai dataset non è stato effettuato alcun post-processing, se non l'unico accorgimento di utilizzare splitting stratificato.
 
-## Datasets usati
+Datasets usati
+-------------
 
-|        | ArticularyWordRecognition | CharacterTrajectories | Libras | SpokenArabicDigits |
-|--------|:-------------------------:|:---------------------:|:------:|:------------------:|
-| Input  |             9             |           3           |   2    |         13         |
-| Output |            25             |          20           |   15   |         10         |
+|        | ArticularyWordRecognition | CharacterTrajectories | Epilepsy | JapaneseVowels  | Libras | SpokenArabicDigits |
+|--------|:-------------------------:|:---------------------:|:--------:|:---------------:|:------:|:------------------:|
+| Input  |             9             |           3           |    3     |       12        |   2    |         13         |
+| Output |            25             |          20           |    4     |        9        |   15   |         10         |
 
-### ArticularyWordRecognition
+## ArticularyWordRecognition
 
 Questi dati sono stati prelevati tramite 12 sensori posizionati sulla lingua e sulla faccia di nativi Inglesi i quali pronunceranno 25 parole (le classi di output), 
 ognuno di questi sensori riporta la propria posizione X Y Z per un totale di 36 features, ma in questo dataset soltanto 9 vengono usate,
 
-Risultati:
+### BestModels
 
-![image](plots/benchmarks/ArticularyWordRecognition/fixed_units/summary_plots.svg)
-![image](plots/benchmarks/ArticularyWordRecognition/fixed_units/summary_histograms.svg)
-![image](plots/benchmarks/ArticularyWordRecognition/fixed_units/summary_table.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/best_models/summary_plots.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/best_models/summary_histograms.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/best_models/summary_table.svg)
 
-### CharacterTrajectories
+### Multiple S.R.
+
+![image](plots/benchmarks/ArticularyWordRecognition/multiple_s.r./summary_plots.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/multiple_s.r./summary_histograms.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/multiple_s.r./summary_table.svg)
+
+### Single S.R.
+
+![image](plots/benchmarks/ArticularyWordRecognition/single_s.r./summary_plots.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/single_s.r./summary_histograms.svg)
+![image](plots/benchmarks/ArticularyWordRecognition/single_s.r./summary_table.svg)
+
+## CharacterTrajectories
 
 In questo dataset vengono rappresentati dei caratteri scritti su una tavoletta grafica, infatti il dataset è composto da tre componenti la posizione <X,Y> della penna e la pressione che esercita sulla tavoletta.
 I caratteri registrati sono 'a' 'b' 'c' 'd' 'e' 'g' 'h' 'l' 'm' 'n' 'o' 'p' 'q' 'r' 's' 'u' 'v' 'w' 'y' 'z', quindi 20 classi diverse.
 
-Risultati:
+### BestModels
 
-![image](plots/benchmarks/CharacterTrajectories/fixed_units/summary_plots.svg)
-![image](plots/benchmarks/CharacterTrajectories/fixed_units/summary_histograms.svg)
-![image](plots/benchmarks/CharacterTrajectories/fixed_units/summary_table.svg)
+![image](plots/benchmarks/CharacterTrajectories/best_models/summary_plots.svg)
+![image](plots/benchmarks/CharacterTrajectories/best_models/summary_histograms.svg)
+![image](plots/benchmarks/CharacterTrajectories/best_models/summary_table.svg)
+
+### Multiple S.R.
+
+![image](plots/benchmarks/CharacterTrajectories/multiple_s.r./summary_plots.svg)
+![image](plots/benchmarks/CharacterTrajectories/multiple_s.r./summary_histograms.svg)
+![image](plots/benchmarks/CharacterTrajectories/multiple_s.r./summary_table.svg)
+
+### Single S.R.
+
+![image](plots/benchmarks/CharacterTrajectories/single_s.r./summary_plots.svg)
+![image](plots/benchmarks/CharacterTrajectories/single_s.r./summary_histograms.svg)
+![image](plots/benchmarks/CharacterTrajectories/single_s.r./summary_table.svg)
 
 
 Vecchi risultati:
@@ -122,31 +148,113 @@ Vecchi risultati:
 | 175   | 86.85±2.49% | 83.31±4.26% | 93.43±2.91% | 93.38±2.47% |
 | 200   | 87.49±2.33% | 90.74±2.49% | 94.28±0.74% | 95.18±1.33% |
 
-### Libras
+
+## Epilepsy
+
+### BestModels
+
+![image](plots/benchmarks/Epilepsy/best_models/summary_plots.svg)
+![image](plots/benchmarks/Epilepsy/best_models/summary_histograms.svg)
+![image](plots/benchmarks/Epilepsy/best_models/summary_table.svg)
+
+### Multiple S.R.
+
+![image](plots/benchmarks/Epilepsy/multiple_s.r./summary_plots.svg)
+![image](plots/benchmarks/Epilepsy/multiple_s.r./summary_histograms.svg)
+![image](plots/benchmarks/Epilepsy/multiple_s.r./summary_table.svg)
+
+### Single S.R.
+
+![image](plots/benchmarks/Epilepsy/single_s.r./summary_plots.svg)
+![image](plots/benchmarks/Epilepsy/single_s.r./summary_histograms.svg)
+![image](plots/benchmarks/Epilepsy/single_s.r./summary_table.svg)
+
+
+## JapaneseVowels
+
+### BestModels
+
+![image](plots/benchmarks/JapaneseVowels/best_models/summary_plots.svg)
+![image](plots/benchmarks/JapaneseVowels/best_models/summary_histograms.svg)
+![image](plots/benchmarks/JapaneseVowels/best_models/summary_table.svg)
+
+### Multiple S.R.
+
+![image](plots/benchmarks/JapaneseVowels/multiple_s.r./summary_plots.svg)
+![image](plots/benchmarks/JapaneseVowels/multiple_s.r./summary_histograms.svg)
+![image](plots/benchmarks/JapaneseVowels/multiple_s.r./summary_table.svg)
+
+### Single S.R.
+
+![image](plots/benchmarks/JapaneseVowels/single_s.r./summary_plots.svg)
+![image](plots/benchmarks/JapaneseVowels/single_s.r./summary_histograms.svg)
+![image](plots/benchmarks/JapaneseVowels/single_s.r./summary_table.svg)
+
+## Libras
 
 LIBRAS, è l'acronimo in Portoghese di "Lingua BRAsileira de Sinais", che è la lingua dei segni ufficiale brasiliana. 
 La componenti del dataset sono le direzioni delle mani.
 
-Risultati:
+### BestModels
 
-![image](plots/benchmarks/Libras/fixed_units/summary_plots.svg)
-![image](plots/benchmarks/Libras/fixed_units/summary_histograms.svg)
-![image](plots/benchmarks/Libras/fixed_units/summary_table.svg)
+![image](plots/benchmarks/Libras/best_models/summary_plots.svg)
+![image](plots/benchmarks/Libras/best_models/summary_histograms.svg)
+![image](plots/benchmarks/Libras/best_models/summary_table.svg)
 
-### SpokenArabicDigits
+### Multiple S.R.
+
+![image](plots/benchmarks/Libras/multiple_s.r./summary_plots.svg)
+![image](plots/benchmarks/Libras/multiple_s.r./summary_histograms.svg)
+![image](plots/benchmarks/Libras/multiple_s.r./summary_table.svg)
+
+### Single S.R.
+
+![image](plots/benchmarks/Libras/single_s.r./summary_plots.svg)
+![image](plots/benchmarks/Libras/single_s.r./summary_histograms.svg)
+![image](plots/benchmarks/Libras/single_s.r./summary_table.svg)
+
+## SpokenArabicDigits
 
 Questo data set è derivato da file audio, composto da 8800 (10 cifre x 10 ripetizioni x 88 partecipanti) serie temporali di 13 
 Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che parlano Arabo come lingua madre tra i 18 e i 40 anni di età che rappresentano le prime 10 cifre arabe. 
 
-![image](plots/benchmarks/SpokenArabicDigits/fixed_units/summary_plots.svg)
-![image](plots/benchmarks/SpokenArabicDigits/fixed_units/summary_histograms.svg)
-![image](plots/benchmarks/SpokenArabicDigits/fixed_units/summary_table.svg)
+### BestModels
+
+![image](plots/benchmarks/SpokenArabicDigits/best_models/summary_plots.svg)
+![image](plots/benchmarks/SpokenArabicDigits/best_models/summary_histograms.svg)
+![image](plots/benchmarks/SpokenArabicDigits/best_models/summary_table.svg)
+
+### Multiple S.R.
+
+![image](plots/benchmarks/SpokenArabicDigits/multiple_s.r./summary_plots.svg)
+![image](plots/benchmarks/SpokenArabicDigits/multiple_s.r./summary_histograms.svg)
+![image](plots/benchmarks/SpokenArabicDigits/multiple_s.r./summary_table.svg)
+
+### Single S.R.
+
+![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_plots.svg)
+![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_histograms.svg)
+![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_table.svg)
+
+## Summary
+
+### BestModels
+![image](plots/benchmarks/datasets_summary_best_models_best.svg)
+### Multiple S.R.
+![image](plots/benchmarks/datasets_summary_multiple_s.r._units_50.svg)
+![image](plots/benchmarks/datasets_summary_multiple_s.r._units_75.svg)
+![image](plots/benchmarks/datasets_summary_multiple_s.r._units_100.svg)
+![image](plots/benchmarks/datasets_summary_multiple_s.r._units_150.svg)
+![image](plots/benchmarks/datasets_summary_multiple_s.r._units_250.svg)
+### Single S.R.
+![image](plots/benchmarks/datasets_summary_single_s.r._units_50.svg)
+![image](plots/benchmarks/datasets_summary_single_s.r._units_75.svg)
+![image](plots/benchmarks/datasets_summary_single_s.r._units_100.svg)
+![image](plots/benchmarks/datasets_summary_single_s.r._units_150.svg)
+![image](plots/benchmarks/datasets_summary_single_s.r._units_250.svg)
 
 ## Considerazioni
 
-Dai questi test si puà vedere come il modello ESN2 dia sempre risultati migliori rispetto a ESN1 (contollo), mentre gli altri due modelli 
-ESN3 e ESN4 risultano essere più variabili, per esempio nel dataset ArticularyWordRecognition i modelli ESN3 e ESN4 hanno
-valori di accuracy minori di ESN2/ESN1 mentre per quanto riguarda il dataset CharacterTrajectories i modelli ESN3 e ESN4 ottengono fin da subito valori di accuratezza maggiori. 
 
 #### Altro
 
