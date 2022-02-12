@@ -7,6 +7,7 @@ import os
 import re
 
 from matplotlib import pyplot as plt
+from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import MultipleLocator
 from time import time
 
@@ -352,17 +353,22 @@ class BenchmarksDB:
         models = get_models_names(exp_tree)
 
         body = []
+        color = []
         for model in models:
             row = []
+            color_row = []
             for experiment in experiments:
                 try:
                     stat = exp_tree[experiment][model]
                     row.append(stat.get_accuracy_str())
+                    color_row.append(stat.get_accuracy_mean())
                 except KeyError as _:
                     row.append('-')
+                    color_row.append(None)
             body.append(row)
+            color.append(color_row)
 
-        fig = plot_table('Dataset: "' + dataset_name + '"\nExp. Class: "' + class_name + '"', experiments, models, body)
+        fig = plot_table('Dataset: "' + dataset_name + '"\nExp. Class: "' + class_name + '"', experiments, models, body, best_worse=color)
         self._save_and_show(fig, path, dataset_name, class_name, "summary table", show)
 
     # X is hp Y is experiments
@@ -526,7 +532,7 @@ def get_matching_keys(exps, keys):
     return ret
 
 
-def plot_table(title, x_labels, y_labels, body):
+def plot_table(title, x_labels, y_labels, body, best_worse=None):
     width = (len(x_labels) + 1)
     height = len(y_labels) / 2
     fig, ax = plt.subplots(figsize=(width, height))
@@ -536,8 +542,21 @@ def plot_table(title, x_labels, y_labels, body):
     ax.axis('off')
     ax.axis('tight')
     ax.set_title(title)
-    ax.table(cellText=body, rowLabels=y_labels, colLabels=x_labels,
-             loc='center', cellLoc='center', edges='horizontal')
+    the_table = ax.table(cellText=body, rowLabels=y_labels, colLabels=x_labels,
+                         loc='center', cellLoc='center', edges='horizontal', fontsize=10.)
+    the_table.auto_set_font_size(False)
+    the_table.auto_set_column_width(col=list(range(len(x_labels))))
+    for r in range(len(y_labels)):
+        the_table[r, 0].set_height(0.1)
+
+    if best_worse is not None:
+        min_color = '#db222a'
+        max_color = '#386641'
+        argmin = np.argmin(best_worse, axis=0)
+        argmax = np.argmax(best_worse, axis=0)
+        for i in range(len(argmin)):
+            the_table.get_celld()[(argmin[i]+1, i)].get_text().set_color(min_color)
+            the_table.get_celld()[(argmax[i]+1), i].get_text().set_color(max_color)
 
     return fig
 

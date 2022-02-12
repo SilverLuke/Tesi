@@ -1,23 +1,22 @@
 # Indice
 
 - [I modelli usati](#i-modelli-usati)
-  - [ESN1:](#esn1)
-  - [ESN2:](#esn2)
-  - [ESN3:](#esn3)
-  - [ESN4:](#esn4)
+  - [ESN1](#esn1)
+  - [ESN2](#esn2)
+  - [ESN3](#esn3)
+  - [ESN4](#esn4)
 - [Esperimenti](#esperimenti)
-- [Risultati ottenuti](#risultati-ottenuti)
   - [Datasets usati](#datasets-usati)
-    - [ArticularyWordRecognition](#articularywordrecognition)
-    - [CharacterTrajectories](#charactertrajectories)
-    - [Libras](#libras)
-    - [SpokenArabicDigits](#spokenarabicdigits)
+  - [ArticularyWordRecognition](#articularywordrecognition)
+  - [CharacterTrajectories](#charactertrajectories)
+  - [Epilepsy](#epilepsy)
+  - [JapaneseVowels](#japanesevowels)
+  - [Libras](#libras)
+  - [SpokenArabicDigits](#spokenarabicdigits)
+  - [Summary](#summary)
   - [Considerazioni](#considerazioni)
-      - [Altro](#altro)
 - [Implementazione](#implementazione)
 - [TODO & IDEAS](#todo--ideas)
-  - [TODO](#todo)
-  - [IDEAS](#ideas)
 
 # I modelli usati
 
@@ -27,7 +26,7 @@ di conseguenza la disposizione dei pesi nelle matrici del reservoir.
 
 Per semplificare le successive spiegazioni assegno dei nomi alle varie modifiche usate.
 
-## ESN1:
+## ESN1
 
 Si tratta del modello ESN standard come definito nel paper "".
 I parametri sono il numero di unità, il fattore di connessione nel kernel ricorrente, il raggio spettrale, il fattore leaky, l'input scaling e il bias scaling. 
@@ -35,7 +34,7 @@ I parametri sono il numero di unità, il fattore di connessione nel kernel ricor
 ![image](plots/weights/ArticularyWordRecognition/best_models/best_esn1.svg)
  
 
-## ESN2:
+## ESN2
 
 Questa è la prima modifica ai modelli ESN presa in considerazione, 
 l'idea alla base è quella di suddividere le N feature del dataset in N sub-reservoirs diversi ma con stessa dimensione non comunicati tra loro. 
@@ -53,7 +52,7 @@ Alcuni parametri si estendono per funzionalità aggiuntive per effettuare un tun
 Ma possono essere usati come valore per avere i sub-reservoir con gli stessi parametri
 
 
-## ESN3:
+## ESN3
 
 In questo modello vengono aggiunte le interconnessioni tra i sub-reservoir presenti nel modello ESN2, il valore di queste interconnessioni può essere trovato tramite models selection. 
 
@@ -62,11 +61,12 @@ In questo modello vengono aggiunte le interconnessioni tra i sub-reservoir prese
 Non si aggiungono parametri si estende il vettore d'interconnessione a una matrice d'interconnessione tra gli N sub-reservoirs.
 
 
-## ESN4:
+## ESN4
 
 Non ci sono modifiche logiche rispetto al modello ESN3, in questo "modello" c'è la possibilità di variare le dimensioni dei sub-reservoirs.
 
-Esempio di reservoirs con due sub-reservoir di dimensione differente
+Esempio di reservoirs con due sub-reservoir di dimensione differente.
+
 ![image](plots/weights/CharacterTrajectories/multiple_s.r./units_50_esn4.svg)
 
 # Esperimenti
@@ -97,18 +97,21 @@ ognuno di questi sensori riporta la propria posizione X Y Z per un totale di 36 
 
 ![image](plots/benchmarks/ArticularyWordRecognition/best_models/summary_plots.svg)
 ![image](plots/benchmarks/ArticularyWordRecognition/best_models/summary_histograms.svg)
+
 ![image](plots/benchmarks/ArticularyWordRecognition/best_models/summary_table.svg)
 
 ### Multiple S.R.
 
 ![image](plots/benchmarks/ArticularyWordRecognition/multiple_s.r./summary_plots.svg)
 ![image](plots/benchmarks/ArticularyWordRecognition/multiple_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/ArticularyWordRecognition/multiple_s.r./summary_table.svg)
 
 ### Single S.R.
 
 ![image](plots/benchmarks/ArticularyWordRecognition/single_s.r./summary_plots.svg)
 ![image](plots/benchmarks/ArticularyWordRecognition/single_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/ArticularyWordRecognition/single_s.r./summary_table.svg)
 
 ## CharacterTrajectories
@@ -120,34 +123,22 @@ I caratteri registrati sono 'a' 'b' 'c' 'd' 'e' 'g' 'h' 'l' 'm' 'n' 'o' 'p' 'q' 
 
 ![image](plots/benchmarks/CharacterTrajectories/best_models/summary_plots.svg)
 ![image](plots/benchmarks/CharacterTrajectories/best_models/summary_histograms.svg)
+
 ![image](plots/benchmarks/CharacterTrajectories/best_models/summary_table.svg)
 
 ### Multiple S.R.
 
 ![image](plots/benchmarks/CharacterTrajectories/multiple_s.r./summary_plots.svg)
 ![image](plots/benchmarks/CharacterTrajectories/multiple_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/CharacterTrajectories/multiple_s.r./summary_table.svg)
 
 ### Single S.R.
 
 ![image](plots/benchmarks/CharacterTrajectories/single_s.r./summary_plots.svg)
 ![image](plots/benchmarks/CharacterTrajectories/single_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/CharacterTrajectories/single_s.r./summary_table.svg)
-
-
-Vecchi risultati:
-
-| UNITS | ESN 1       | ESN 2       | ESN 3       | ESN 4       |
-|-------|-------------|-------------|-------------|-------------|
-| 25    | 71.28±3.35% | 76.38±1.59% | 74.40±4.28% | 83.11±4.60% |
-| 50    | 77.66±2.66% | 82.98±2.94% | 84.83±1.85% | 87.80±4.68% |
-| 75    | 82.74±3.63% | 85.58±2.60% | 80.75±2.79% | 90.65±3.31% |
-| 100   | 84.46±2.36% | 89.47±0.83% | 92.06±1.13% | 90.95±2.03% |
-| 125   | 85.40±2.47% | 87.66±3.43% | 93.91±1.95% | 93.52±0.71% |
-| 150   | 85.81±1.56% | 90.03±2.43% | 93.75±1.70% | 94.67±0.69% |
-| 175   | 86.85±2.49% | 83.31±4.26% | 93.43±2.91% | 93.38±2.47% |
-| 200   | 87.49±2.33% | 90.74±2.49% | 94.28±0.74% | 95.18±1.33% |
-
 
 ## Epilepsy
 
@@ -155,18 +146,21 @@ Vecchi risultati:
 
 ![image](plots/benchmarks/Epilepsy/best_models/summary_plots.svg)
 ![image](plots/benchmarks/Epilepsy/best_models/summary_histograms.svg)
+
 ![image](plots/benchmarks/Epilepsy/best_models/summary_table.svg)
 
 ### Multiple S.R.
 
 ![image](plots/benchmarks/Epilepsy/multiple_s.r./summary_plots.svg)
 ![image](plots/benchmarks/Epilepsy/multiple_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/Epilepsy/multiple_s.r./summary_table.svg)
 
 ### Single S.R.
 
 ![image](plots/benchmarks/Epilepsy/single_s.r./summary_plots.svg)
 ![image](plots/benchmarks/Epilepsy/single_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/Epilepsy/single_s.r./summary_table.svg)
 
 
@@ -176,18 +170,21 @@ Vecchi risultati:
 
 ![image](plots/benchmarks/JapaneseVowels/best_models/summary_plots.svg)
 ![image](plots/benchmarks/JapaneseVowels/best_models/summary_histograms.svg)
+
 ![image](plots/benchmarks/JapaneseVowels/best_models/summary_table.svg)
 
 ### Multiple S.R.
 
 ![image](plots/benchmarks/JapaneseVowels/multiple_s.r./summary_plots.svg)
 ![image](plots/benchmarks/JapaneseVowels/multiple_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/JapaneseVowels/multiple_s.r./summary_table.svg)
 
 ### Single S.R.
 
 ![image](plots/benchmarks/JapaneseVowels/single_s.r./summary_plots.svg)
 ![image](plots/benchmarks/JapaneseVowels/single_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/JapaneseVowels/single_s.r./summary_table.svg)
 
 ## Libras
@@ -199,18 +196,21 @@ La componenti del dataset sono le direzioni delle mani.
 
 ![image](plots/benchmarks/Libras/best_models/summary_plots.svg)
 ![image](plots/benchmarks/Libras/best_models/summary_histograms.svg)
+
 ![image](plots/benchmarks/Libras/best_models/summary_table.svg)
 
 ### Multiple S.R.
 
 ![image](plots/benchmarks/Libras/multiple_s.r./summary_plots.svg)
 ![image](plots/benchmarks/Libras/multiple_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/Libras/multiple_s.r./summary_table.svg)
 
 ### Single S.R.
 
 ![image](plots/benchmarks/Libras/single_s.r./summary_plots.svg)
 ![image](plots/benchmarks/Libras/single_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/Libras/single_s.r./summary_table.svg)
 
 ## SpokenArabicDigits
@@ -222,31 +222,39 @@ Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che p
 
 ![image](plots/benchmarks/SpokenArabicDigits/best_models/summary_plots.svg)
 ![image](plots/benchmarks/SpokenArabicDigits/best_models/summary_histograms.svg)
+
 ![image](plots/benchmarks/SpokenArabicDigits/best_models/summary_table.svg)
 
 ### Multiple S.R.
 
 ![image](plots/benchmarks/SpokenArabicDigits/multiple_s.r./summary_plots.svg)
 ![image](plots/benchmarks/SpokenArabicDigits/multiple_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/SpokenArabicDigits/multiple_s.r./summary_table.svg)
 
 ### Single S.R.
 
 ![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_plots.svg)
 ![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_histograms.svg)
+
 ![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_table.svg)
 
 ## Summary
 
 ### BestModels
+
 ![image](plots/benchmarks/datasets_summary_best_models_best.svg)
+
 ### Multiple S.R.
+
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_50.svg)
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_75.svg)
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_100.svg)
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_150.svg)
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_250.svg)
+
 ### Single S.R.
+
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_50.svg)
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_75.svg)
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_100.svg)
@@ -255,12 +263,11 @@ Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che p
 
 ## Considerazioni
 
-
-#### Altro
-
-Ulteriori grafici si trovano all'interno della cartella ```images``` dove sono suddivisi per dataset.
+Ulteriori grafici e tabelle si trovano all'interno della cartella ```plots/benchmars```, dove sono suddivisi per dataset.
 
 # Implementazione
+
+Out dated!!
 
 I modelli vengono definiti all'interno del file ```lib/models.py```, ed ereditano dalla classe "ESNInteface" i metodi di call, fit e evaluate,
 le differenze tra i modelli sono le funzioni d'inizializzazione del reservoir nella funzione di init.
@@ -289,4 +296,10 @@ per poi andarle a riunificare in una sola matrice.
 
 ### IDEAS
 
-- ESN1.2 = kernel uguale a ESN2 (splitted) mentre il kernel ricorrente uguale a ESN1
+Rinominare le reti
+ESN1 -> ESN
+ESN2 -> SESN (Split ESN) / MESN (Multiple ESN)
+ESN3 -> SESNI (Split ESN Interconnected) / MESNI (Multiple ESN Interconnected)
+ESN4 -> SESNIS (Split ESN Interconnected Sized) / MESNIS (Multiple ESN Interconnected Sized)
+
+- Altra architettura dove il kernel usa l'inizializzatore SplitKernel mentre il kernel ricorrente uguale a ESN1.
