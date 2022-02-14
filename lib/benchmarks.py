@@ -1,5 +1,5 @@
 import json
-from itertools import groupby
+import math
 
 import keras_tuner
 import numpy as np
@@ -7,7 +7,6 @@ import os
 import re
 
 from matplotlib import pyplot as plt
-from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import MultipleLocator
 from time import time
 
@@ -278,12 +277,16 @@ class BenchmarksDB:
             for cap in caps:
                 cap.set_markeredgewidth(1)
 
-        ax.set_ylim(top=1.0)
-        ax.yaxis.set_major_locator(MultipleLocator(0.05))
-        ax.yaxis.set_minor_locator(MultipleLocator(0.01))
+        y_min = round_down(np.min([np.subtract(x[1], x[2]) for _, x in values.items()]))
+        y_max = round_up(np.max([np.add(x[1], x[3]) for _, x in values.items()]))
+
+        ax.set_ylabel('Accuracy')
+        ax.set_ylim([y_min, y_max])
         ax.set_axisbelow(True)
         ax.yaxis.grid(color='gray', linestyle='dashed')
-        ax.set_ylabel('Accuracy')
+        locator = (y_max - y_min) / 5.
+        ax.yaxis.set_major_locator(MultipleLocator(locator))
+        ax.yaxis.set_minor_locator(MultipleLocator(locator / 2.))
         ax.set_xlabel(key.capitalize())
         ax.set_title('Dataset: "' + dataset_name + '"\nExp. Class: "' + class_name + '"\nhp: ' + key)
 
@@ -463,6 +466,7 @@ class BenchmarksDB:
                    align='center',
                    capsize=3)
 
+        # Spit dataset names
         x_new = []
         for label in x_labels:
             new = "" + label[0]
@@ -472,12 +476,18 @@ class BenchmarksDB:
                 new += c
             x_new.append(new)
 
+        y_min = round_down(np.min([np.subtract(x[0], x[1]) for _, x in data.items()]))
+        y_max = round_up(np.max([np.add(x[0], x[2]) for _, x in data.items()]))
+
         ax.set_xticks(ticks=x, labels=x_new)
         ax.set_ylabel('Accuracy')
+
+        ax.set_ylim([y_min, y_max])
         ax.set_axisbelow(True)
         ax.yaxis.grid(color='gray', linestyle='dashed')
-        ax.yaxis.set_major_locator(MultipleLocator(0.1))
-        ax.yaxis.set_minor_locator(MultipleLocator(0.05))
+        locator = (y_max - y_min) / 5.
+        ax.yaxis.set_major_locator(MultipleLocator(locator))
+        ax.yaxis.set_minor_locator(MultipleLocator(locator/2.))
         ax.set_title(title)
         ax.legend(loc='lower right')
         return fig
@@ -497,6 +507,8 @@ class BenchmarksDB:
                capsize=10)
 
         ax.set_ylabel('Accuracy')
+        ax.set_axisbelow(True)
+        ax.yaxis.grid(color='gray', linestyle='dashed')
         ax.set_ylim([self.get_min_acc(), 1.0])
         ax.yaxis.set_major_locator(MultipleLocator(0.1))
         ax.yaxis.set_minor_locator(MultipleLocator(0.05))
@@ -533,8 +545,10 @@ def get_matching_keys(exps, keys):
 
 
 def plot_table(title, x_labels, y_labels, body, best_worse=None):
-    width = (len(x_labels) + 1)
-    height = len(y_labels) / 2
+    width = len(x_labels) + 1
+    height = np.floor(len(y_labels) / 2) + 0.5
+    if height < 1.5 :
+        height = 2
     fig, ax = plt.subplots(figsize=(width, height))
 
     # hide axes
@@ -546,17 +560,21 @@ def plot_table(title, x_labels, y_labels, body, best_worse=None):
                          loc='center', cellLoc='center', edges='horizontal', fontsize=10.)
     the_table.auto_set_font_size(False)
     the_table.auto_set_column_width(col=list(range(len(x_labels))))
-    for r in range(len(y_labels)):
-        the_table[r, 0].set_height(0.1)
+    cells = the_table.get_celld()
+    for cell in cells.values():
+        cell.set_height(0.2)
+
+    for c in range(len(x_labels)):
+        cells[0, c].visible_edges = 'B'
 
     if best_worse is not None:
         min_color = '#db222a'
-        max_color = '#386641'
+        max_color = '#008000'
         argmin = np.argmin(best_worse, axis=0)
         argmax = np.argmax(best_worse, axis=0)
         for i in range(len(argmin)):
-            the_table.get_celld()[(argmin[i]+1, i)].get_text().set_color(min_color)
-            the_table.get_celld()[(argmax[i]+1), i].get_text().set_color(max_color)
+            cells[(argmin[i]+1, i)].get_text().set_color(min_color)
+            cells[(argmax[i]+1), i].get_text().set_color(max_color)
 
     return fig
 
@@ -589,3 +607,31 @@ def get_sorted_keys(tree):
 
 def lower_and_replace(string: str):
     return string.lower().replace(" ", "_")
+
+def round_up(number:float, decimals:int=1):
+    """
+    Returns a value rounded up to a specific number of decimal places.
+    """
+    if not isinstance(decimals, int):
+        raise TypeError("decimal places must be an integer")
+    elif decimals < 0:
+        raise ValueError("decimal places has to be 0 or more")
+    elif decimals == 0:
+        return math.ceil(number)
+
+    factor = 10 ** decimals
+    return math.ceil(number * factor) / factor
+
+def round_down(number:float, decimals:int=1):
+    """
+    Returns a value rounded up to a specific number of decimal places.
+    """
+    if not isinstance(decimals, int):
+        raise TypeError("decimal places must be an integer")
+    elif decimals < 0:
+        raise ValueError("decimal places has to be 0 or more")
+    elif decimals == 0:
+        return math.ceil(number)
+
+    factor = 10 ** decimals
+    return math.floor(number * factor) / factor

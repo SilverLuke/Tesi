@@ -2099,7 +2099,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -2293,7 +2293,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -3188,7 +3188,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -3382,7 +3382,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -4277,7 +4277,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -4471,7 +4471,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -5367,7 +5367,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -5561,7 +5561,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -6456,7 +6456,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -6650,7 +6650,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -7547,7 +7547,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -7645,7 +7645,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": false,
                             "input scaling 0": 0.1,
@@ -8324,7 +8324,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -8422,7 +8422,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": false,
                             "input scaling 0": 0.1,
@@ -9101,7 +9101,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -9199,7 +9199,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.3000000000000003,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -9878,7 +9878,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -9976,7 +9976,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 0.1,
@@ -10654,7 +10654,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -10752,7 +10752,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": true,
                             "input scaling 0": 0.5,
@@ -13874,7 +13874,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -13996,7 +13996,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -14650,7 +14650,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -14772,7 +14772,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 1.2000000000000002,
                             "spectral radius 2": 0.1,
@@ -15426,7 +15426,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -15548,7 +15548,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.4000000000000001,
                             "spectral radius 1": 0.1,
                             "spectral radius 2": 0.1,
@@ -16204,7 +16204,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -16302,7 +16302,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": true,
                             "input scaling 0": 1.0,
@@ -16904,7 +16904,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -17002,7 +17002,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -17602,7 +17602,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -17700,7 +17700,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 0.9,
@@ -18300,7 +18300,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -18398,7 +18398,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": false,
                             "input scaling 0": 1.2000000000000002,
@@ -18998,7 +18998,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -19096,7 +19096,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -20565,7 +20565,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -20675,7 +20675,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 0.1,
                             "use G.S.R.": true,
@@ -21290,7 +21290,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -21400,7 +21400,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 0.1,
                             "use G.S.R.": true,
@@ -22015,7 +22015,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -22125,7 +22125,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "use G.S.R.": false,
@@ -22739,7 +22739,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -22849,7 +22849,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "use G.S.R.": false,
@@ -23463,7 +23463,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -23573,7 +23573,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 0.1,
                             "use G.S.R.": true,
@@ -24191,7 +24191,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -24289,7 +24289,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -24876,7 +24876,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -24974,7 +24974,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 0.1,
@@ -25561,7 +25561,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -25659,7 +25659,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.2,
                             "use G.S.R.": true,
                             "input scaling 0": 1.5000000000000002,
@@ -26247,7 +26247,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -26345,7 +26345,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.2000000000000002,
                             "use G.S.R.": true,
                             "input scaling 0": 0.8,
@@ -26933,7 +26933,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -27031,7 +27031,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -30201,7 +30201,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -30443,7 +30443,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -31499,7 +31499,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -31741,7 +31741,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -32796,7 +32796,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -33038,7 +33038,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -34092,7 +34092,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -34334,7 +34334,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -35389,7 +35389,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -35631,7 +35631,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -36687,7 +36687,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -36785,7 +36785,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": true,
                             "input scaling 0": 0.8,
@@ -37516,7 +37516,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -37614,7 +37614,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.3000000000000003,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -38344,7 +38344,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -38442,7 +38442,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -39173,7 +39173,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -39271,7 +39271,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -40001,7 +40001,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -40099,7 +40099,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -41853,7 +41853,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -41975,7 +41975,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -42630,7 +42630,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -42752,7 +42752,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -43407,7 +43407,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -43529,7 +43529,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.7000000000000001,
                             "spectral radius 1": 0.1,
                             "spectral radius 2": 0.9,
@@ -44183,7 +44183,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -44305,7 +44305,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -44960,7 +44960,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -45082,7 +45082,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.9000000000000001,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 0.8,
@@ -45738,7 +45738,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -45836,7 +45836,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": true,
                             "input scaling 0": 1.2000000000000002,
@@ -46437,7 +46437,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -46535,7 +46535,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -47135,7 +47135,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -47233,7 +47233,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.2000000000000002,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -47833,7 +47833,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -47931,7 +47931,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.2000000000000002,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -48531,7 +48531,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -48629,7 +48629,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -51657,7 +51657,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -51887,7 +51887,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 0.1,
@@ -52903,7 +52903,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -53133,7 +53133,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 0.1,
                             "spectral radius 2": 0.1,
@@ -54149,7 +54149,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -54379,7 +54379,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 0.1,
                             "spectral radius 2": 1.3000000000000003,
@@ -55394,7 +55394,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -55624,7 +55624,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "spectral radius 1": 2.0,
                             "spectral radius 2": 2.0,
@@ -56640,7 +56640,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -56870,7 +56870,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "spectral radius 1": 0.1,
                             "spectral radius 2": 0.1,
@@ -57888,7 +57888,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -57986,7 +57986,7 @@
                         ],
                         "values": {
                             "units": 50,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -58704,7 +58704,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -58802,7 +58802,7 @@
                         ],
                         "values": {
                             "units": 75,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": true,
                             "input scaling 0": 1.0,
@@ -59521,7 +59521,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -59619,7 +59619,7 @@
                         ],
                         "values": {
                             "units": 100,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 2.0,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,
@@ -60337,7 +60337,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -60435,7 +60435,7 @@
                         ],
                         "values": {
                             "units": 150,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 0.1,
                             "use G.S.R.": false,
                             "input scaling 0": 1.2000000000000002,
@@ -61152,7 +61152,7 @@
                             {
                                 "class_name": "Fixed",
                                 "config": {
-                                    "name": "connectivity  0",
+                                    "name": "connectivity 0",
                                     "conditions": [],
                                     "value": 1.0
                                 }
@@ -61250,7 +61250,7 @@
                         ],
                         "values": {
                             "units": 250,
-                            "connectivity  0": 1.0,
+                            "connectivity 0": 1.0,
                             "spectral radius 0": 1.4000000000000001,
                             "use G.S.R.": false,
                             "input scaling 0": 1.5000000000000002,

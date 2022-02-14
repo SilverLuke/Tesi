@@ -1,5 +1,5 @@
 # Indice
-
+- [Intro](#intro)
 - [I modelli usati](#i-modelli-usati)
   - [ESN1](#esn1)
   - [ESN2](#esn2)
@@ -13,71 +13,129 @@
   - [JapaneseVowels](#japanesevowels)
   - [Libras](#libras)
   - [SpokenArabicDigits](#spokenarabicdigits)
-  - [Summary](#summary)
-  - [Considerazioni](#considerazioni)
+- [Summary & Considerazioni](#summary--considerazioni)
+  - [BestModels](#bestmodels)
+  - [Multiple S.R.](#multiple-sr)
+  - [Single S.R.](#single-sr)
 - [Implementazione](#implementazione)
 - [TODO & IDEAS](#todo--ideas)
 
+# Intro
+
+Si vuole verificare se si ottiene un aumento di accuratezza, a parità di dimensione del reservoir, nel suddividere le **N** feature di
+un dataset in altrettante reti di tipo ESN con successiva unione dell'output di queste **N** reti.
+
+<!-- 
+Le architetture sviluppate e testate utilizzano come base, l'architettura ESN di conseguenza sono formate da un reservoir
+e da un readout. Il reservoir come nell'architettura ESN è formato da un kernel e da un kernel ricorrente. 
+-->
+
 # I modelli usati
 
-Tutti i modelli sono formati da un reservoir e da un readout, il reservoir è formato da un kernel e da un kernel ricorrente.
-Quello che è stato modificato in questi esperimenti è come le feature di un dataset vengono fornite al reservoir, 
-di conseguenza la disposizione dei pesi nelle matrici del reservoir.
+Per semplificare l'implementazione e aumentare le performance delle architetture testate, le **N** reti ESN utilizzate vengono 
+riunite come un unico reservoir opportunamente costruito.
 
-Per semplificare le successive spiegazioni assegno dei nomi alle varie modifiche usate.
+Per semplificare le successive spiegazioni assegno dei nomi (nomi definitivi TbA) alle varie modifiche usate.
 
 ## ESN1
 
 Si tratta del modello ESN standard come definito nel paper "".
-I parametri sono il numero di unità, il fattore di connessione nel kernel ricorrente, il raggio spettrale, il fattore leaky, l'input scaling e il bias scaling. 
+Gli iper-paramentri sono quindi:
+ - il numero di unità **U**
+ - il fattore di connessione nel kernel ricorrente
+ - il raggio spettrale
+ - il fattore leaky
+ - l'input scaling
+ - il bias scaling
 
+Quindi per un dataset di N feature abbiamo sempre sei iper-parametri.
+
+Esempio di modello ESN:
 ![image](plots/weights/ArticularyWordRecognition/best_models/best_esn1.svg)
  
 
 ## ESN2
 
-Questa è la prima modifica ai modelli ESN presa in considerazione, 
-l'idea alla base è quella di suddividere le N feature del dataset in N sub-reservoirs diversi ma con stessa dimensione non comunicati tra loro. 
+Questa è la prima modifica ai modelli ESN presa in considerazione, l'idea alla base è quella di suddividere le **N** feature 
+del dataset in **N** sub-reservoirs diversi ma avendo la stessa dimensione e questi sub-reservoirs non sono comunicati tra loro. 
 
-Tutto ciò è stato implementato come un grande reservoir che contiene al suo interno gli N sub-reservoirs, dividendo il kernel in N matrici di dimensione 1 X Units / N, e il recurrent kernel
-anch'esso diviso in N matrici di dimensione Units / N X Units / N. 
+Tutto ciò è viene implementato come un grande reservoir che contiene al suo interno gli **N** sub-reservoirs, dividendo il 
+kernel in **N** matrici di dimensione <1; **U**nits / **N**>, e il recurrent kernel anch'esso diviso in **N** matrici di dimensione 
+<**U**nits / **N**; **U**nits / **N**>. 
 Esempio di distribuzione dei pesi:
 
 ![image](plots/weights/CharacterTrajectories/single_s.r./units_50_esn2.svg)
 
-Richiede come principale parametro aggiuntivo il numero di sub-reservoir da generare al proprio interno. 
-Alcuni parametri si estendono per funzionalità aggiuntive per effettuare un tuning più fine sono:
-    - Il raggio spettrale può essere un vettore di dimensione N, e indica il raggio spettrale dell' i-esimo sub-reservor.
-    - Il fattore d' interconnessione può essere un vettore di dimensione N che rappresenta l'interconnessione all'interno dell'i-esimo reservoir.
-Ma possono essere usati come valore per avere i sub-reservoir con gli stessi parametri
+Gli iper-parametri presenti in questo modello:
 
+  - Il raggio spettrale è un vettore di dimensione **N**, e indica il raggio spettrale dell' i-esimo sub-reservor.
+  - Il raggio spettrale (G.S.R.) di tutto il reservoir una volta costruito, opzionale.
+  - Il fattore di connessione è un vettore di dimensione **N** che rappresenta l'interconnessione all'interno dell'i-esimo reservoir.
+  - Il bias scaling e l'input scaling sono vettori di dimensione **N**.
+  
+Quindi se si utilizza dataset di **N** feature si arriva al massimo a: 4 * **N** + 3 iper-parametri
+4 si ottiene per via del vettore dei raggi spettri, vettore connessione e i 2 vettori per l'input e l'output scaling
+3 si ottine per: il numero di unità che il reservoir contiene, i raggio spettrale del reservoir e il fattore leaky.
+
+Il numero di sub-reservoir non è un iper-parametro perchè dipende strettamente dal dataset utilizzato. 
 
 ## ESN3
 
-In questo modello vengono aggiunte le interconnessioni tra i sub-reservoir presenti nel modello ESN2, il valore di queste interconnessioni può essere trovato tramite models selection. 
+In questo modello vengono aggiunte le interconnessioni tra gli **N** sub-reservoir presenti nel modello ESN2,
 
 ![image](plots/weights/CharacterTrajectories/multiple_s.r./units_50_esn3.svg)
 
-Non si aggiungono parametri si estende il vettore d'interconnessione a una matrice d'interconnessione tra gli N sub-reservoirs.
+Ulteriori iper-parametri:
+  - Il fattore di connessione diventa una matrice di dimensione <**N**; **N**> dove la diagonale indica il fattore di
+connessione del sub-reservor mentre i valori off-diagonali sono il valore di connessione tra due sub-reservoir. Questo
+permette che la connessione tra il reservoir i-esimo e j-esimo sia diversa dalla connessione tra j-esimo e i-esimo.
+  - Si aggiunge una matrice di dimensione <**N**; **N**> per indicare i valori massimi che le matrici di inter-connessione possono avere.
+La diagonale di questa matrice non viene utilizzata.
 
+Quindi se si utilizza dataset di **N** feature si arriva a: 2 * **N** ^ 2 + 2 + **N** + 3 iper-parametri:
+
+ - il primo 2 si ottiene per via delle due matrici **N** e un vettore, le matrici sono di connessione e i limiti tolta da diagonale (lunga **N**) 
+ma si aggiunge il vettore dei raggi spettri lungo **N**.
+ - il secondo 2 sono il bias scaling e l'output scaling.
+ - 3 si ottiene per il numero di unità che il reservoir contiene i raggio spettrale del reservoir e il fattore leaky.
 
 ## ESN4
 
-Non ci sono modifiche logiche rispetto al modello ESN3, in questo "modello" c'è la possibilità di variare le dimensioni dei sub-reservoirs.
+In questo "modello" c'è la possibilità di variare le dimensioni dei sub-reservoirs.
 
 Esempio di reservoirs con due sub-reservoir di dimensione differente.
 
-![image](plots/weights/CharacterTrajectories/multiple_s.r./units_50_esn4.svg)
+![image](plots/weights/CharacterTrajectories/single_s.r./units_250_esn4.svg)
+
+Si aggiunge agli iper-parametri del modello ESN3 un vettore che indica il partizionamento delle unità nei vari sub-reservoirs; 
+quindi nel conteggio degli iper-parametri bisogna aggiungere **N** valori ottenendo 2 * **N** ^ 2 + 3 + **N** + 3 iper-parametri.
+
+Come si nota il numero di iper-parametri cresce esponenzialmente al crescere delle feature di un dataset.
+
+Negli esperimenti successivi si utilizzeranno anche dataset con 13 feature, ciò porterebbe il numero di iper-parametri a 380 rendendo completamente 
+inutile o estremamente lunga la fase di model selection.
 
 # Esperimenti
 
-Al momento sono stati effettuati tipi/classi di esperimenti:
+<!-- Formule Da controllare da qui in poi -->
 
- - "Best model": un singolo esperimento dove tutti gli iper-parametri dei modelli sono cercati tramite model selection, cosi facendo si ottiene per ogni tipo di modello il modello con migliore accuracy (ma non succede sempre [BUG?])
- - "Multiple S.R.": una serie di esperimenti dove il numero di unità viene fissato a 50 75 100 150 250 per esperimento; il fattore di connessione dei sub-reservoirs viene fissato a 1, e si utilizza un solo valore di inter-connessione tra i sub-reservoir per vedere come l'accuratezza aumenti all'aumentare del numero di unità, tramite model selection si cercano N raggi spettrali per i sub reservoirs.
- - "Single S.R.": uguale a "Multiple S.R." solo che si utilizza un raggio spettrale per gli N sub reservoirs.
+In tutti gli esperimenti la matrice di inter-connessione e i valori massimi delle inter-connessioni vengono rappresentate ciascuna come unico valore,
+riducendo esponenzialmente il numero di iper-parametri da ricercare.
 
-Ogni modello è stato ottimizzato tramite models selection per ogni singolo esperimento, così da ottenere la massima accuratezza ogni volta.
+Al momento sono stati effettuati queste classi di esperimenti per ogni dataset:
+
+ - "Best model": un singolo esperimento dove tutti gli iper-parametri dei modelli sono cercati tramite model selection. Iper-parametri: 4 * **N** + 5 (ESN3).
+ - "Multiple S.R.": una serie di esperimenti dove il numero di unità viene fissato a 50 75 100 150 250 per esperimento; 
+il fattore di connessione dei sub-reservoirs viene fissato a 1, tramite model selection si cercano **N** raggi spettrali per
+i sub reservoirs e l'input scaling e il bias scaling non sono vettori ma 2 valori distinti. Iper-parametri: **N** + 7
+ - "Single S.R.": uguale a "Multiple S.R." solo che si utilizza un raggio spettrale per gli N sub-reservoirs. Iper-parametri: 8
+
+Ogni modello di ogni esperimento è stato ottenuto tramite models selection, è stato utilizzato come tuner il BayesianOptimization 
+con un numero massimo di tentativi pari a 100 e come ottimizzatore Adam.
+
+I valori di accuratezza seguenti sono stati ottenuti eseguendo il training su dieci diversi modelli rigenerati utilizzando i miglio iper-parametri ottenuti.
+Questo perchè essendo il reservoir statico una sua differente inizializzazione fornisce risultati diversi.
+
 Ai dataset non è stato effettuato alcun post-processing, se non l'unico accorgimento di utilizzare splitting stratificato.
 
 Datasets usati
@@ -239,13 +297,15 @@ Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che p
 
 ![image](plots/benchmarks/SpokenArabicDigits/single_s.r./summary_table.svg)
 
-## Summary
+# Summary & Considerazioni
 
-### BestModels
+## BestModels
 
 ![image](plots/benchmarks/datasets_summary_best_models_best.svg)
 
-### Multiple S.R.
+L'unico modello tra i quelli testati che spicca è il modello ESN che nel primo terzo e ultimo dataset ottengono risultati migliori. 
+
+## Multiple S.R.
 
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_50.svg)
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_75.svg)
@@ -253,7 +313,7 @@ Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che p
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_150.svg)
 ![image](plots/benchmarks/datasets_summary_multiple_s.r._units_250.svg)
 
-### Single S.R.
+## Single S.R.
 
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_50.svg)
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_75.svg)
@@ -261,9 +321,12 @@ Frequency Cepstral Coefficients (MFCCs) ottenuti da 44 maschi e 44 femmine che p
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_150.svg)
 ![image](plots/benchmarks/datasets_summary_single_s.r._units_250.svg)
 
-## Considerazioni
+Tranne che per il dataset japaneseVowels, i modelli testati non ottengono miglioramenti rispetto al modello ESN standard.
+Questi risultati "negativi" credo siano dovuti all'alto numero di iper-parametri. Anche se nel'esperimento "Single S.R." il numero di iper-parametri è costante.
 
-Ulteriori grafici e tabelle si trovano all'interno della cartella ```plots/benchmars```, dove sono suddivisi per dataset.
+Una fatto da notare è l'alta variabilità dei nuovi modelli rispetto a ESN1
+
+Ulteriori grafici e tabelle (anche degli iper-parametri) si trovano all'interno della cartella ```plots/benchmars```, dove sono suddivisi per dataset.
 
 # Implementazione
 
@@ -297,9 +360,9 @@ per poi andarle a riunificare in una sola matrice.
 ### IDEAS
 
 Rinominare le reti
-ESN1 -> ESN
-ESN2 -> SESN (Split ESN) / MESN (Multiple ESN)
-ESN3 -> SESNI (Split ESN Interconnected) / MESNI (Multiple ESN Interconnected)
-ESN4 -> SESNIS (Split ESN Interconnected Sized) / MESNIS (Multiple ESN Interconnected Sized)
+ - ESN1 -> ESN
+ - ESN2 -> SESN (Split ESN) / MESN (Multiple ESN)
+ - ESN3 -> SESNI (Split ESN Interconnected) / MESNI (Multiple ESN Interconnected)
+ - ESN4 -> SESNIS (Split ESN Interconnected Sized) / MESNIS (Multiple ESN Interconnected Sized)
 
-- Altra architettura dove il kernel usa l'inizializzatore SplitKernel mentre il kernel ricorrente uguale a ESN1.
+ <!-- Altra architettura dove il kernel usa l'inizializzatore SplitKernel mentre il kernel ricorrente uguale a ESN1. -->
