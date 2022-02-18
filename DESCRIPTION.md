@@ -92,7 +92,7 @@ permette che la connessione tra il reservoir i-esimo e j-esimo sia diversa dalla
   - Si aggiunge una matrice di dimensione <**N**; **N**> per indicare i valori massimi che le matrici di inter-connessione possono avere.
 La diagonale di questa matrice non viene utilizzata.
 
-Quindi se si utilizza dataset di **N** feature si arriva a: 2 * **N** ^ 2 + 2 + **N** + 3 iper-parametri:
+Quindi se si utilizza dataset di **N** feature si arriva a: 2 * **N** ^ 2 + 2 * **N** + 3 iper-parametri:
 
  - il primo 2 si ottiene per via delle due matrici **N** e un vettore, le matrici sono di connessione e i limiti tolta da diagonale (lunga **N**) 
 ma si aggiunge il vettore dei raggi spettri lungo **N**.
@@ -108,7 +108,7 @@ Esempio di reservoirs con due sub-reservoir di dimensione differente.
 ![image](plots/weights/CharacterTrajectories/single_s.r./units_250_esn4.svg)
 
 Si aggiunge agli iper-parametri del modello ESN3 un vettore che indica il partizionamento delle unità nei vari sub-reservoirs; 
-quindi nel conteggio degli iper-parametri bisogna aggiungere **N** valori ottenendo 2 * **N** ^ 2 + 3 + **N** + 3 iper-parametri.
+quindi nel conteggio degli iper-parametri bisogna aggiungere **N** valori ottenendo 2 * **N** ^ 2 + 3 * **N** + 3 iper-parametri.
 
 Come si nota il numero di iper-parametri cresce esponenzialmente al crescere delle feature di un dataset.
 
@@ -324,7 +324,7 @@ L'unico modello tra i quelli testati che spicca è il modello ESN che nel primo 
 Tranne che per il dataset japaneseVowels, i modelli testati non ottengono miglioramenti rispetto al modello ESN standard.
 Questi risultati "negativi" credo siano dovuti all'alto numero di iper-parametri. Anche se nel'esperimento "Single S.R." il numero di iper-parametri è costante.
 
-Una fatto da notare è l'alta variabilità dei nuovi modelli rispetto a ESN1
+Un fatto da notare è l'alta variabilità dei nuovi modelli rispetto a ESN1
 
 Ulteriori grafici e tabelle (anche degli iper-parametri) si trovano all'interno della cartella ```plots/benchmars```, dove sono suddivisi per dataset.
 
@@ -357,6 +357,10 @@ per poi andarle a riunificare in una sola matrice.
 
 # TODO & IDEAS
 
+### TODO
+I modelli ESN1 per i test single s.r. e multiple s.r sono uguali quindi è inutile effettuare il doppio training. Da implementare...
+ <!-- Altra architettura dove il kernel usa l'inizializzatore SplitKernel mentre il kernel ricorrente uguale a ESN1. -->
+
 ### IDEAS
 
 Rinominare le reti
@@ -365,4 +369,6 @@ Rinominare le reti
  - ESN3 -> SESNI (Split ESN Interconnected) / MESNI (Multiple ESN Interconnected)
  - ESN4 -> SESNIS (Split ESN Interconnected Sized) / MESNIS (Multiple ESN Interconnected Sized)
 
- <!-- Altra architettura dove il kernel usa l'inizializzatore SplitKernel mentre il kernel ricorrente uguale a ESN1. -->
+
+
+
