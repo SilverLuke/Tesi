@@ -94,8 +94,8 @@ La diagonale di questa matrice non viene utilizzata.
 
 Quindi se si utilizza dataset di **N** feature si arriva a: 2 * **N** ^ 2 + 2 * **N** + 3 iper-parametri:
 
- - il primo 2 si ottiene per via delle due matrici **N** e un vettore, le matrici sono di connessione e i limiti tolta da diagonale (lunga **N**) 
-ma si aggiunge il vettore dei raggi spettri lungo **N**.
+ - il primo 2 si ottiene per via delle due matrici **N** e un vettore, le matrici sono di connessione e i limiti tolta la diagonale (lunga **N**) 
+ma si aggiunge il vettore dei raggi spettrali lungo **N**.
  - il secondo 2 sono il bias scaling e l'output scaling.
  - 3 si ottiene per il numero di unità che il reservoir contiene i raggio spettrale del reservoir e il fattore leaky.
 

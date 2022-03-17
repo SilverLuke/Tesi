@@ -1,7 +1,6 @@
-#tensorflow==2.7.0
-#tensorflow-addons==0.15.0  # ESN test
-#tensorboard_plugin_profile  # Profiler
-#keras-tuner
+tensorflow==2.8.0
+keras-tuner
+IRESNs-tensorflow @ https://github.com/SilverLuke/IRESNs/releases/download/0.1.0/IRESNs_tensorflow-0.1.0-py3-none-any.whl
 
 numpy
 sktime
@@ -9,8 +8,11 @@ scikit-learn
 scipy
 matplotlib
 
-ipykernel
+
+#ipykernel
+#tensorflow-addons==0.15.0  # ESN test
+#tensorboard_plugin_profile  # Profiler
 
 # Send gnome notification
-dbus-python  # for notify2
-notify2
+#dbus-python  # for notify2
+#notify2
