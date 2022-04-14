@@ -1490,7 +1490,7 @@ z
      <use xlink:href="#DejaVuSans-2e" x="1124.304688"/>
      <use xlink:href="#DejaVuSans-22" x="1156.091797"/>
     </g>
-    <!-- hp: units -->
+    <!-- self: units -->
     <g transform="translate(191.254375 43.192875)scale(0.12 -0.12)">
      <defs>
       <path id="DejaVuSans-68" d="M 3513 2113 

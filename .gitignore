@@ -1,9 +1,13 @@
 datasets/*
 models/*
+benchmarks/*
+
 examples
 .idea
 venv
 **/__pycache__
 
+
 !datasets/.gitkeep
 !models/.gitkeep
+!benchmarks/.gitkeep

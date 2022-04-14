@@ -1483,7 +1483,7 @@ z
      <use xlink:href="#DejaVuSans-2e" x="1214.099609"/>
      <use xlink:href="#DejaVuSans-22" x="1245.886719"/>
     </g>
-    <!-- hp: units -->
+    <!-- self: units -->
     <g transform="translate(191.254375 43.192875)scale(0.12 -0.12)">
      <use xlink:href="#DejaVuSans-68"/>
      <use xlink:href="#DejaVuSans-70" x="63.378906"/>
