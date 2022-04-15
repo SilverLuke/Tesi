@@ -63,7 +63,8 @@ class HP_Manager:
                  units=HP.free(),
                  norm_sub_reservoirs=HP.free(),
                  norm_inter_connectivity=HP.free(),
-                 connectivity=HP.free(),
+                 connectivity_subr=HP.free(),
+                 connectivity_inter=HP.free(),
                  input_scaling=HP.free(),
                  bias_scaling=HP.free(),
                  leaky=HP.free(),
@@ -73,10 +74,11 @@ class HP_Manager:
                  use_norm2=False,
                  ):
         self.units = units
+        self.connectivity_subr = connectivity_subr
+        self.connectivity_inter = connectivity_inter
         self.norm_sub_reservoirs = norm_sub_reservoirs
         self.norm_inter_connectivity = norm_inter_connectivity
         self.use_norm2 = use_norm2
-        self.connectivity = connectivity
         self.input_scaling = input_scaling
         self.bias_scaling = bias_scaling
         self.leaky = leaky
@@ -96,23 +98,21 @@ class HP_Manager:
         return tmp
 
     def get_connectivity_esn(self, tuner):
-        if self.connectivity.type == HP.FREE:
+        if self.connectivity_subr.type == HP.FREE or self.connectivity_subr.type == HP.RESTRICTED:
             tmp = tuner.Float('connectivity 0', min_value=0.1, max_value=1., sampling="linear")
-        elif self.connectivity.type == HP.FIXED:
-            tmp = tuner.Fixed('connectivity 0', self.connectivity.value[0])
-        elif self.connectivity.type == HP.RESTRICTED:
-            tmp = tuner.Fixed('connectivity 0', self.connectivity.value)
+        elif self.connectivity_subr.type == HP.FIXED:
+            tmp = tuner.Fixed('connectivity 0', self.connectivity_subr.value)
         else:
             raise ValueError("HP type not found")
         return tmp
 
     def get_connectivity_iresn(self, tuner, length):
-        if self.connectivity.type == HP.FREE:
+        if self.connectivity_subr.type == HP.FREE:
             tmp = [tuner.Float('connectivity ' + str(i), min_value=0., max_value=1., sampling="linear") for i in
                    range(length)]
-        elif self.connectivity.type == HP.FIXED:
-            tmp = [tuner.Fixed('connectivity', self.connectivity.value[0]) for _ in range(length)]
-        elif self.connectivity.type == HP.RESTRICTED:
+        elif self.connectivity_subr.type == HP.FIXED:
+            tmp = [tuner.Fixed('connectivity', self.connectivity_subr.value) for _ in range(length)]
+        elif self.connectivity_subr.type == HP.RESTRICTED:
             tmp2 = tuner.Float('connectivity 0', min_value=0., max_value=1., sampling="linear")
             tmp = [tmp2 for _ in range(length)]
         else:
@@ -120,32 +120,23 @@ class HP_Manager:
         return tmp
 
     def get_connectivity_iiresn(self, tuner, length):
-        if self.connectivity.type == HP.FREE:
-            conn_matrix = [
-                [tuner.Float('connectivity ' + str(i), min_value=0., max_value=1., sampling="linear") if i == j else
-                 tuner.Float('connectivity ' + str(i) + '->' + str(j), min_value=0., max_value=1.,
-                             sampling="linear")
-                 for i in range(length)]
-                for j in range(length)]
-        elif self.connectivity.type == HP.FIXED:
-            diagonal, off_diagonal = self.connectivity.value
-            off_diagonal = tuner.Fixed('connectivity X->Y', off_diagonal)
-            conn_matrix = [[tuner.Fixed('connectivity ' + str(i), diagonal) if i == j else
-                            off_diagonal
+        conn_subr = self.get_connectivity_iresn(tuner, length)
+        if self.connectivity_inter.type == HP.FREE:
+            conn_matrix = [[conn_subr[i] if i == j else
+                            tuner.Float('connectivity ' + str(i) + '->' + str(j), min_value=0., max_value=1.,
+                                        sampling="linear")
                             for i in range(length)]
                            for j in range(length)]
-        elif self.connectivity.type == HP.RESTRICTED:
-            if self.connectivity.value is None:
-                connectivity = [tuner.Float('connectivity ' + str(i), min_value=0., max_value=1., sampling="linear")
-                                for
-                                i
-                                in range(length)]
-            else:
-                tmp = tuner.Fixed('connectivity 0', self.connectivity.value)
-                connectivity = [tmp for _ in range(length)]
-            intra_connectivity = tuner.Float('connectivity X->Y', min_value=0., max_value=1., sampling="linear")
-            conn_matrix = [[connectivity[i] if i == j else intra_connectivity for i in range(length)] for j in
-                           range(length)]
+        elif self.connectivity_inter.type == HP.RESTRICTED:
+            conn = tuner.Float('connectivity X->Y', min_value=0., max_value=1., sampling="linear")
+            conn_matrix = [[conn_subr[i] if i == j else
+                            conn for i in range(length)]
+                           for j in range(length)]
+        elif self.norm_inter_connectivity.type == HP.FIXED:
+            conn_matrix = [[conn_subr[i] if i == j else
+                            tuner.Fixed('connectivity X->Y', self.connectivity_inter.value)
+                            for i in range(length)]
+                           for j in range(length)]
         else:
             raise ValueError("HP type not found")
         return conn_matrix
@@ -193,7 +184,8 @@ class HP_Manager:
         return sr_vec
 
     def get_normalization_iiresn(self, tuner, length, min_value=0.01, max_value=1.5, sampling="linear"):
-        sr_vec = self.get_normalization_iresn(tuner, length, min_value=min_value, max_value=max_value, sampling=sampling)
+        sr_vec = self.get_normalization_iresn(tuner, length, min_value=min_value, max_value=max_value,
+                                              sampling=sampling)
         if self.norm_inter_connectivity.type == HP.FREE:
             norm = [[sr_vec[i] if i == j else
                      tuner.Float('norm ' + str(i) + '->' + str(j), min_value=min_value, max_value=min_value,
@@ -216,19 +208,19 @@ class HP_Manager:
 
     def get_input_scaling(self, tuner, length, min_value=0.01, max_value=1.5, sampling="linear"):
         if length != 1:
-            return self.input_scaling.get_float_vec(tuner, 'bias scaling', length, min_value=min_value,
+            return self.input_scaling.get_float_vec(tuner, 'input scaling', length, min_value=min_value,
                                                     max_value=max_value, sampling=sampling)
         else:
-            return self.input_scaling.get_float(tuner, 'bias scaling', min_value=min_value, max_value=max_value,
+            return self.input_scaling.get_float(tuner, 'input scaling', min_value=min_value, max_value=max_value,
                                                 sampling=sampling)
 
     def get_bias_scaling(self, tuner, length, min_value=0.01, max_value=1.5, sampling="linear"):
         if length != 1:
-            return self.input_scaling.get_float_vec(tuner, 'bias scaling', length, min_value=min_value,
-                                                    max_value=max_value, sampling=sampling)
+            return self.bias_scaling.get_float_vec(tuner, 'bias scaling', length, min_value=min_value,
+                                                   max_value=max_value, sampling=sampling)
         else:
-            return self.input_scaling.get_float(tuner, 'bias scaling', min_value=min_value, max_value=max_value,
-                                                sampling=sampling)
+            return self.bias_scaling.get_float(tuner, 'bias scaling', min_value=min_value, max_value=max_value,
+                                               sampling=sampling)
 
     def get_gsr(self, tuner, min_value=0.01, max_value=1.5, sampling="linear"):
         use_gsr = self.gsr.get_bool(tuner, 'use G.S.R.')

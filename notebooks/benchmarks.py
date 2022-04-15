@@ -88,6 +88,14 @@ class StatisticEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
+def get_min_accuracy(tree):
+    min_acc = 10.  # accuracy is a value form 0. to 1. so anything is below 10.
+    for stat in tree.values():
+        acc_sum = stat.get_accuracy_mean() - stat.get_accuracy_std()
+        min_acc = min(min_acc, acc_sum)
+    return min_acc
+
+
 def get_path(op_path, obj_path):
     path = op_path
     if path is None:
@@ -100,6 +108,16 @@ def get_path(op_path, obj_path):
 
 def natural_sort(s, _nsre=re.compile('([0-9]+)')):
     return [int(text) if text.isdigit() else text.lower() for text in _nsre.split(s)]
+
+
+def get_models_names(tree):
+    tmp = set()
+    for models in tree.values():
+        for model in models.keys():
+            tmp.add(model)
+    tmp = list(tmp)
+    tmp.sort(key=models_sort)
+    return tmp
 
 
 def models_sort(s):
