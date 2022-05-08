@@ -11,14 +11,22 @@ class Statistic:
     VALIDATION = 1
     TEST = 2
 
-    def __init__(self, hp, train_acc, validation_acc, test_acc, build_time, score=0):
-        self.hyperparameters = hp
+    def __init__(self, train_acc, validation_acc, test_acc, build_time, score=0, keras_hps=None, dict_hps=None):
+        self.keras_hps = None
+        self.dict_hps = None
+        if keras_hps is not None:
+            self.keras_hps = keras_hps
+        if dict_hps is not None:
+            self.dict_hps = dict_hps
         self.accuracies = (train_acc, validation_acc, test_acc)
         self.time = build_time
         self.score = score
 
     def add_score(self, score):
         self.score = score
+
+    def get_accuracy(self, acc_type=TEST):
+        return self.accuracies[acc_type]
 
     def get_accuracy_mean(self, acc_type=TEST):
         return np.mean(self.accuracies[acc_type])
@@ -52,6 +60,27 @@ class Statistic:
     def get_time_std(self):
         return np.std(self.time)
 
+    def get_hyperparameters(self):
+        if self.keras_hps is not None:
+            return self.keras_hps.values.keys()
+        if self.dict_hps is not None:
+            return self.dict_hps.keys()
+        raise ValueError("Missing hyperparameters")
+
+    def get_hyperparameter_value(self, key):
+        if self.keras_hps is not None:
+            return self.keras_hps.values.get(key)
+        if self.dict_hps is not None:
+            return self.dict_hps.get(key)
+        raise ValueError("Missing hyperparameters")
+
+    def get_score(self):
+        if isinstance(self.score, list):
+            return self.score[-1][0]
+        if isinstance(self.score, float):
+            return self.score
+        raise ValueError("Unknown type for score")
+
     def __str__(self):
         ret = "  Accuracies\n".format(self.get_accuracy_str())
         ret += "      TRAIN : {}\n".format(self.get_accuracy_str(acc_type=Statistic.TRAIN))
@@ -60,25 +89,35 @@ class Statistic:
         ret += "       TEST : {}\n".format(self.get_accuracy_str(acc_type=Statistic.TEST))
         ret += " Build time : {:.2f}±{:.2f}s\n".format(self.get_time_mean(), self.get_time_std())
         #  ret += "Hyperparameters:\n"
-        #  for key, val in self.hyperparameters.values.items():
+        #  for key, val in self.keras_hps.values.items():
         #      ret += "\t{}: {}\n".format(key, val)
         return ret
 
     def toJson(self):
         config = {
-            'hyperparameters': self.hyperparameters.get_config(),
             'accuracies'     : self.accuracies,
             'score'          : self.score,
             'build time'     : self.time,
         }
+        if self.keras_hps is not None:
+            config['keras hps'] = self.keras_hps.get_config(),
+        if self.dict_hps is not None:
+            config['dict hps'] = self.dict_hps
         return config
 
     @classmethod
     def fromJson(cls, values):
-        return cls(keras_tuner.engine.hyperparameters.HyperParameters.from_config(values['hyperparameters']),
-                   values['accuracies'][Statistic.TRAIN],
+        keras_hps = values.get('keras hps')
+        if keras_hps is not None:
+            keras_hps = keras_tuner.engine.hyperparameters.HyperParameters.from_config(keras_hps)
+
+        return cls(values['accuracies'][Statistic.TRAIN],
                    values['accuracies'][Statistic.VALIDATION],
-                   values['accuracies'][Statistic.TEST], values['build time'], score=values.get('score'))
+                   values['accuracies'][Statistic.TEST],
+                   values['build time'],
+                   score=values.get('score'),
+                   keras_hps=keras_hps,
+                   dict_hps=values.get('dict hps'))
 
 
 class StatisticEncoder(json.JSONEncoder):

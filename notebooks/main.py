@@ -232,7 +232,7 @@ def send_notification(title, message):
 
 
 def build_ESN(output_classes, _reservoirs,  # Defined by dataset
-              hp, tuner) -> ESN:
+              hp: HP_Manager, tuner) -> ESN:
     if output_classes == 2:
         output_units = 1
         readout_activation = READOUT_ACTIVATION_BINARY
@@ -265,7 +265,7 @@ def build_ESN(output_classes, _reservoirs,  # Defined by dataset
 
 
 def build_IRESN(output_classes, reservoirs,  # Defined by dataset
-                hp, tuner) -> IRESN:
+                hp: HP_Manager, tuner) -> IRESN:
     if output_classes == 2:
         output_units = 1
         readout_activation = READOUT_ACTIVATION_BINARY
@@ -302,7 +302,7 @@ def build_IRESN(output_classes, reservoirs,  # Defined by dataset
 
 
 def build_IIRESN(output_classes, reservoirs,  # Defined by dataset
-                 hp, tuner) -> IIRESN:
+                 hp: HP_Manager, tuner) -> IIRESN:
     if output_classes == 2:
         output_units = 1
         readout_activation = READOUT_ACTIVATION_BINARY
@@ -451,7 +451,7 @@ config = {
             'Units 100': single_sr,
         }
     },
-    'Single SR vsr'              : {
+    'Single SR VSR'              : {
         'Models'     : [
             build_IRESN,
             build_IIRESN,
@@ -469,7 +469,7 @@ config = {
             'Units 100': multiple_sr
         },
     },
-    'Multiple SR vsr'            : {
+    'Multiple SR VSR'            : {
         'Models'     : [
             build_IRESN,
             build_IIRESN,
@@ -487,7 +487,7 @@ config = {
             'Units 100': multiple_sr_multiple_is
         },
     },
-    'Multiple SR Multiple IS vsr': {
+    'Multiple SR Multiple IS VSR': {
         'Models'     : [
             build_IRESN,
             build_IIRESN,

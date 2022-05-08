@@ -5,6 +5,7 @@ class HP:
     FREE = 0
     FIXED = 1
     RESTRICTED = 2
+    CHOICE = 3
 
     def __init__(self, hp_type, value=None):
         self.value = value
@@ -111,7 +112,7 @@ class HP_Manager:
             tmp = [tuner.Float('connectivity ' + str(i), min_value=0., max_value=1., sampling="linear") for i in
                    range(length)]
         elif self.connectivity_subr.type == HP.FIXED:
-            tmp = [tuner.Fixed('connectivity', self.connectivity_subr.value) for _ in range(length)]
+            tmp = [tuner.Fixed('connectivity 0', self.connectivity_subr.value) for _ in range(length)]
         elif self.connectivity_subr.type == HP.RESTRICTED:
             tmp2 = tuner.Float('connectivity 0', min_value=0., max_value=1., sampling="linear")
             tmp = [tmp2 for _ in range(length)]

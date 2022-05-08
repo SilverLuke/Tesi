@@ -6,9 +6,9 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
-from matplotlib.ticker import MultipleLocator
+from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
-from benchmarks import Statistic, get_sorted_keys, models_sort, get_models_names, get_path
+from benchmarks import Statistic, get_sorted_keys, models_sort, get_models_names, get_path, natural_sort
 
 
 def lower_and_replace(string: str):
@@ -46,16 +46,37 @@ def round_down(number: float, decimals: int = 1):
 
 
 def add_stat(values, name, stat):
+    """
+    :param values: the dict
+    :param name: model name
+    :param stat: stat of the model
+    :return: a tuple (mean, min, max, stat obj)
+    """
     if stat is not None:
         values[name][0].append(stat.get_accuracy_mean() * 100)
         values[name][1].append(stat.get_accuracy_error_min() * 100)
         values[name][2].append(stat.get_accuracy_error_max() * 100)
         values[name][3].append(stat)
     else:
-        values[name][0].append(0)
-        values[name][1].append(0)
-        values[name][2].append(0)
-        values[name][3].append(0)
+        values[name][0].append(np.nan)
+        values[name][1].append(np.nan)
+        values[name][2].append(np.nan)
+        values[name][3].append(np.nan)
+
+
+def add_stat_box(values, name, stat):
+    """
+    :param values: the dict
+    :param name: model name
+    :param stat: stat of the model
+    :return: a tuple (train accuracies, stat obj)
+    """
+    if stat is not None:
+        values[name][0].append(np.array(stat.get_accuracy()) * 100)
+        values[name][1].append(stat)
+    else:
+        values[name][0].append(np.nan)
+        values[name][1].append(np.nan)
 
 
 def plot_datasets_summary(ax, dataset, classes, models, plot_x=True, plot_y=True, legend_pos=None):
@@ -119,6 +140,12 @@ def plot_datasets_summary(ax, dataset, classes, models, plot_x=True, plot_y=True
 
 
 class Plotter:
+    ESN = "C0"
+    IRESN = "C1"
+    IIRESN = "C2"
+    MEAN = "C3"
+    MEDIAN = "C4"
+
     def __init__(self, db, plot_path):
         self.db = db
         self.path = plot_path
@@ -132,13 +159,15 @@ class Plotter:
                     path = os.path.join(path, lower_and_replace(class_name))
             if not os.path.exists(path):
                 os.makedirs(path)
-            path = os.path.join(path, lower_and_replace(plot_name + ".svg"))
+            path = os.path.join(path, lower_and_replace(plot_name + ".png"))
             print(path)
-            fig.savefig(path, format='SVG', dpi=100, bbox_inches='tight')
+            fig.savefig(path, format='PNG', dpi=100, bbox_inches='tight')
         if show:
             fig.show()
         plt.close(fig)
 
+    """
+    'Old' definition IRESN IIRESN IIRESNvsr
     def histograms_summary(self, path=None, show=False):
         datasets = len(self.db.head)
         models = self.db.list_models()
@@ -223,24 +252,131 @@ class Plotter:
         print(path)
         with open(path, "w") as f:
             f.write(table)
+    """
 
-    def esperimenti_summary(self, dataset, path: str = None, show: bool = True):
+    def latex_table(self, dataset_order=None, classes_order=None, path=None):
+        def add_model(model, stat):
+            if stat is not None:
+                return "%s & %s & $%.2f \%% $ & %s & $%.2f \%%$ & $ %.2f\%% $ \\tabularnewline\n" % \
+                       (model,
+                        stat.get_accuracy_latex(Statistic.TRAIN),
+                        stat.get_score() * 100,
+                        stat.get_accuracy_latex(Statistic.TEST),
+                        stat.get_accuracy_min(Statistic.TEST) * 100,
+                        stat.get_accuracy_max(Statistic.TEST) * 100
+                        )
+            else:
+                return "- & - & - & - & - & - \\tabularnewline\n"
+
+        def sub_table(dataset, columns):
+            table = ""
+            # table += "\\hline\n"
+            # table += "\\rowcolor{lightgray}\n"
+            # table += "\\multicolumn{%i}{c}{%s}\\tabularnewline\n" % (columns, "Riferimento")
+            # table += "\\hline\n"
+
+            stat = dataset["Reference"]["Units 100"]["ESN"]
+            table += add_model("ESN", stat)
+
+
+            if classes_order is None:
+                classes = dataset.keys()
+            else:
+                classes = classes_order
+
+            for exp in classes:
+                table += "\\hline\n"
+                table += "\\rowcolor{lightgray!50}\n"
+                table += "\\multicolumn{%i}{c}{%s}\\tabularnewline\n" % (columns, exp)
+                table += "\\hline\n"
+                for (model_name, stat) in dataset[exp]["Units 100"].items():
+                    table += add_model(model_name, stat)
+
+            return table
+
+        if dataset_order is None:
+            datasets = self.db.list_datasets()
+        else:
+            datasets = dataset_order
+        legend = ["Modello", "Train set $\pm \sigma$", "Validation score", "Test set $\pm \sigma$", "Test set min",
+                  "Test set max"]
+        columns = len(legend)
+        table = ""
+
+        for dataset_name in datasets:
+            try:
+                dataset = self.db[dataset_name]
+            except KeyError:
+                continue
+            table += "\\begin{table}[ht]\n \\centering\n" \
+                     "\\resizebox{\\textwidth}{!}{%%\n" \
+                     "\\begin{tabular}{%s}\n" % ("c" * columns)
+
+            for i in legend[:-1]:  # :-1 do not put the last element of the legend in the loop to avoid leading & at the end
+                table += i + " & "
+            table += legend[-1]
+            table += "\\tabularnewline\n"
+            table += "\hline\n"
+            table += "\\rowcolor{lightgray}\n"
+            table += "\\multicolumn{%i}{c}{\\textbf{%s}}\\tabularnewline\n" % (columns, dataset_name)
+            table += "\\hline\n"
+            table += sub_table(dataset, columns)
+            table += "\\end{tabular}}\n\\end{table}"
+
+        path = get_path(path, self.path)
+        if not os.path.exists(path):
+            os.makedirs(path)
+        path = os.path.join(path, "table.tex")
+        print(path)
+        with open(path, "w") as f:
+            f.write(table)
+
+    def histogram_summary(self, dataset_order=None, classes_order=None, ncol: int = 1, path: str = None, show: bool = False):
+        if dataset_order is None:
+            datasets = self.db.head.keys()
+        else:
+            datasets = dataset_order
+
+        fig = plt.figure(figsize=(10, 20), dpi=500)
+        plt.axis('off')
+        gs = gridspec.GridSpec(nrows=math.ceil(len(datasets) / ncol), ncols=ncol, figure=fig, hspace=0.4)
+
+        for i, (cell, ds_name) in enumerate(zip(list(gs), datasets)):
+            plot_x = i // ncol == 1
+            plot_y = i == 0 or i == 3
+            ax = plt.Subplot(fig, cell)
+            ax = self.plot_histogram_by_dataset(ax, ds_name, plot_x=plot_x, plot_y=plot_y)
+            fig.add_subplot(ax)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, loc='lower center', ncol=len(labels), bbox_to_anchor=(0.5, 0.085))
+        self._save_and_show(fig, path, "histograms", show=show)
+
+    def histogram_by_dataset(self, dataset, path: str = None, show: bool = False):
+        fig = plt.figure(figsize=(10, 4.2), dpi=500)
+        plt.axis('off')
+        gs = gridspec.GridSpec(nrows=1, ncols=1, figure=fig, hspace=0.4)
+
+        ax = plt.Subplot(fig, gs[0])
+        ax = self.plot_histogram_by_dataset(ax, dataset, plot_x=True, plot_y=True)
+        fig.add_subplot(ax)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, loc='lower center', ncol=len(labels), bbox_to_anchor=(0.5, 0.07))
+        self._save_and_show(fig, path, "histogram", dataset_name=dataset, show=show)
+
+    def plot_histogram_by_dataset(self, ax, dataset, classes_order=None, plot_x=False, plot_y=False):
         models = self.db.list_models()
         classes = self.db[dataset]
 
         width = 0.30
         margin = 0.02
-        zoom = 3
+        zoom = 1.5
         total = width + margin
-        x_labels = ["Reference",
-                    "Single SR Single IS",
-                    "Single SR Single IS VSR",
-                    "Multiple SR Single IS",
-                    "Multiple SR Single IS VSR",
-                    "Multiple SR Multiple IS",
-                    "Multiple SR Multiple IS VSR"]
+        if classes_order is None:
+            x_labels = dataset.keys()
+        else:
+            x_labels = classes_order
         x = np.arange(len(x_labels), dtype=float)
-
+        #(mean, min, max, stat obj)
         values = {name: ([], [], [], []) for name in models}
         add_stat(values, 'ESN', classes['Reference']['Units 100']['ESN'])
         for exp in x_labels[1:]:
@@ -250,27 +386,26 @@ class Plotter:
                 except KeyError:
                     add_stat(values, model, None)
 
-        fig, ax = plt.subplots()
-
-        ax.bar(x[0], values['ESN'][0],  yerr=[values['ESN'][1], values['ESN'][2]],
-               label='ESN', width=width, align='center', capsize=3)
-        ax.bar(x[1:] - total / 2, values['IRESN'][0],  yerr=[values['IRESN'][1], values['IRESN'][2]],
-               label='IRESN', width=width, align='center', capsize=3)
-        ax.bar(x[1:] + total / 2, values['IIRESN'][0],  yerr=[values['IIRESN'][1], values['IIRESN'][2]],
-               label='IIRESN', width=width, align='center', capsize=3)
-
-        ax.set_xticks(ticks=x, labels=x_labels, rotation=15)
-        ax.set_ylabel('Accuracy')
-
-        ax.set_axisbelow(True)
-        ax.yaxis.grid(color='gray', linestyle='dashed')
+        ax.bar(x[0], values['ESN'][0], label='ESN', width=width, align='center', color=self.ESN)
+        ax.bar(x[1:] - total / 2, values['IRESN'][0], label='IRESN', width=width, align='center', color=self.IRESN)
+        ax.bar(x[1:] + total / 2, values['IIRESN'][0], label='IIRESN', width=width, align='center', color=self.IIRESN)
+        ax.axhline(values['ESN'][0][0], color='gray', linestyle='dashed', linewidth=0.5, zorder=-1)
+        ax.set_xticks(ticks=x, labels=["Reference",
+                                       "Single SR\nSingle IS",
+                                       "Single SR\nSingle IS\nVSR",
+                                       "Multiple SR\nSingle IS",
+                                       "Multiple SR\nSingle IS\nVSR",
+                                       "Multiple SR\nMultiple IS",
+                                       "Multiple SR\nMultiple IS\nVSR"], rotation=0, horizontalalignment='center',
+                      fontsize='x-small')
+        plt.yticks(fontsize='x-small')
 
         min_acc = []
         mean_acc = []
         max_acc = []
         for a, x in values.items():
             for acc in x[3]:
-                if acc == 0:
+                if acc is np.nan:
                     continue
                 min_acc.append(acc.get_accuracy_min() * 100)
                 mean_acc.append(acc.get_accuracy_mean() * 100)
@@ -279,18 +414,105 @@ class Plotter:
         y_min = np.min(mean_acc) - zoom
         y_max = np.max(mean_acc) + zoom
         ax.set_ylim([y_min, y_max])
-
+        ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
         locator = (y_max - y_min) / 5.
         ax.yaxis.set_major_locator(MultipleLocator(locator))
         ax.yaxis.set_minor_locator(MultipleLocator(locator / 2.))
         ax.set_title(dataset)
-        handles, labels = ax.get_legend_handles_labels()
-        fig.legend(handles, labels, loc='center right', ncol=1, bbox_to_anchor=(1.05, .5))
-        self._save_and_show(fig, path, "Esperimenti summary plot")
-        return True
+        ax.set_ylabel('Accuracy')
+        return ax
+
+    def box_summary(self, order=None, ncol: int = 1, path: str = None, show: bool = False):
+        if order is None:
+            datasets = self.db.head.keys()
+        else:
+            datasets = order
+
+        fig = plt.figure(figsize=(10, 25), dpi=500)
+        plt.axis('off')
+        gs = gridspec.GridSpec(nrows=math.ceil(len(datasets) / ncol), ncols=ncol, figure=fig, hspace=0.4)
+
+        for i, (cell, ds_name) in enumerate(zip(list(gs), datasets)):
+            plot_x = i // ncol == 1
+            plot_y = i == 0 or i == 3
+            ax = plt.Subplot(fig, cell)
+            ax, bp1, bp2, bp3 = self.plot_box_by_dataset(ax, ds_name, plot_x=plot_x, plot_y=plot_y)
+            fig.add_subplot(ax)
+        ax.legend([bp1["boxes"][0], bp2["boxes"][0], bp3["boxes"][0], bp1['medians'][0], bp1['means'][0]],
+                  ['ESN', 'IRESN', 'IIRESN', 'median', 'mean'],
+                  loc='lower center', ncol=5, bbox_to_anchor=(0.5, -0.425))
+        self._save_and_show(fig, path, "boxs", show=show)
+
+    def box_by_dataset(self, dataset, path: str = None, show: bool = False):
+        fig = plt.figure(figsize=(10, 4.2), dpi=500)
+        plt.axis('off')
+        gs = gridspec.GridSpec(nrows=1, ncols=1, figure=fig, hspace=0.4)
+
+        ax = plt.Subplot(fig, gs[0])
+        ax, bp1, bp2, bp3 = self.plot_box_by_dataset(ax, dataset, plot_x=True, plot_y=True)
+        fig.add_subplot(ax)
+
+        ax.legend([bp1["boxes"][0], bp2["boxes"][0], bp3["boxes"][0], bp1['medians'][0], bp1['means'][0]],
+              ['ESN', 'IRESN', 'IIRESN', 'median', 'mean'],
+              loc='lower center', ncol=5, bbox_to_anchor=(0.5, 0.07))
+        self._save_and_show(fig, path, "box", dataset_name=dataset, show=show)
+
+    def plot_box_by_dataset(self, ax, dataset, plot_x=False, plot_y=False):
+        models = self.db.list_models()
+        classes = self.db[dataset]
+
+        width = 0.30
+        margin = 0.02
+        total = margin + width
+        x_labels = ["Reference",
+                    "Single SR Single IS",
+                    "Single SR Single IS VSR",
+                    "Multiple SR Single IS",
+                    "Multiple SR Single IS VSR",
+                    "Multiple SR Multiple IS",
+                    "Multiple SR Multiple IS VSR"]
+        x = np.arange(len(x_labels), dtype=float)
+
+        values = {name: ([], []) for name in models}
+        add_stat_box(values, 'ESN', classes['Reference']['Units 100']['ESN'])
+        for exp in x_labels[1:]:
+            for model in models[1:]:
+                try:
+                    add_stat_box(values, model, classes[exp]['Units 100'][model])
+                except KeyError:
+                    add_stat_box(values, model, None)
+
+        bp1 = ax.boxplot(values['ESN'][0], positions=[0], widths=width,
+                         showmeans=True, meanline=True, patch_artist=True, boxprops=dict(facecolor=self.ESN),
+                         medianprops=dict(color=self.MEDIAN, linestyle='-'),
+                         meanprops=dict(color=self.MEAN, linestyle='-'))
+        bp2 = ax.boxplot(values['IRESN'][0],
+                         positions=np.arange(len(values['IRESN'][0]), dtype=float) + (1. - total / 2.), widths=width,
+                         showmeans=True, meanline=True, patch_artist=True, boxprops=dict(facecolor=self.IRESN),
+                         medianprops=dict(color=self.MEDIAN, linestyle='-'),
+                         meanprops=dict(color=self.MEAN, linestyle='-'))
+        bp3 = ax.boxplot(values['IIRESN'][0],
+                         positions=np.arange(len(values['IIRESN'][0]), dtype=float) + (1. + total / 2.), widths=width,
+                         showmeans=True, meanline=True, patch_artist=True, boxprops=dict(facecolor=self.IIRESN),
+                         medianprops=dict(color=self.MEDIAN, linestyle='-'),
+                         meanprops=dict(color=self.MEAN, linestyle='-'))
+        ax.axhline(values['ESN'][1][0].get_accuracy_mean() * 100, color='gray', linestyle='dashed', linewidth=0.5,
+                   zorder=-1)
+
+        ax.set_xticks(ticks=x, labels=["Reference",
+                                       "Single SR\nSingle IS",
+                                       "Single SR\nSingle IS\nVSR",
+                                       "Multiple SR\nSingle IS",
+                                       "Multiple SR\nSingle IS\nVSR",
+                                       "Multiple SR\nMultiple IS",
+                                       "Multiple SR\nMultiple IS\nVSR"],
+                      rotation=0, horizontalalignment='center', fontsize='x-small')
+        ax.set_title(dataset)
+        ax.set_ylabel('Accuracy')
+        return ax, bp1, bp2, bp3
 
     def hp_table_by_model(self, dataset_name: str, model: str, keys: [],
-                               path: str = None, show: bool = True):
+                          path: str = None, show: bool = True):
         exps_tree = self.db[dataset_name]
 
         def get_experiments(exp_tree, model):
@@ -298,16 +520,16 @@ class Plotter:
             for exp_name, sub_exps in exp_tree.items():
                 if model in sub_exps['Units 100'].keys():
                     tmp.add(exp_name)
-            return list(tmp)
+            tmp = list(tmp)
+            tmp.sort(key=natural_sort)
+            return tmp
 
-        print(model)
         experiments = get_experiments(exps_tree, model)
-        print(experiments)
 
         hps = set()
         for experiment in experiments:
-            stats = exps_tree[experiment]['Units 100'][model]
-            hps.update(stats.hyperparameters.values.keys())
+            stat = exps_tree[experiment]['Units 100'][model]
+            hps.update(stat.get_hyperparameters())
 
         hp_keys = get_matching_keys(keys, list(hps))
         hp_keys = get_sorted_keys(hp_keys)
@@ -317,7 +539,7 @@ class Plotter:
             row = []
             for key in hp_keys:
                 stat = exps_tree[experiment]['Units 100'][model]
-                value = stat.hyperparameters.values.get(key)
+                value = stat.get_hyperparameter_value(key)
                 if isinstance(value, float):
                     row.append(float("{:0.3f}".format(value)))
                 elif isinstance(value, int):
@@ -333,6 +555,8 @@ class Plotter:
                          experiments,
                          body)
         self._save_and_show(fig, path, "hps " + model, dataset_name=dataset_name, show=False)
+
+
 """
     def plot_lines_by_key(self, dataset_name: str, class_name: str, key: str = 'units',
                           path: str = None, show: bool = True):
@@ -350,7 +574,7 @@ class Plotter:
             for j, model in enumerate(models):
                 if model in tested_models:
                     stat = exp_tree[experiment][model]
-                    values[model][0].append(stat.hyperparameters.values.get(key))
+                    values[model][0].append(stat.keras_hps.values.get(key))
                     values[model][1].append(stat.get_accuracy_mean())
                     values[model][2].append(stat.get_accuracy_error_min())
                     values[model][3].append(stat.get_accuracy_error_max())
@@ -665,7 +889,7 @@ class Plotter:
 
         self = set()
         for model in models:
-            self.update(models_tree[model].hyperparameters.values.keys())
+            self.update(models_tree[model].keras_hps.values.keys())
         hp_keys = get_matching_keys(keys, self)
         try:
             hp_keys.remove("use G.S.R.")
@@ -678,7 +902,7 @@ class Plotter:
         for model in models:
             row = []
             for key in hp_keys:
-                value = models_tree[model].hyperparameters.values.get(key)
+                value = models_tree[model].keras_hps.values.get(key)
                 if isinstance(value, float):
                     row.append(float("{:0.3f}".format(value)))
                 elif isinstance(value, int):
@@ -836,8 +1060,8 @@ def get_best_models(experiments, list_models):
     for experiment_name, models in experiments.items():
         for model_name in list_models:
             stat = models[model_name]
-            if best[model_name][0] < stat.score:
-                best[model_name] = (stat.score, stat, experiment_name)
+            if best[model_name][0] < stat.get_score():
+                best[model_name] = (stat.get_score(), stat, experiment_name)
     return best
 
 
